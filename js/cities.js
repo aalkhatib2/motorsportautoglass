@@ -1,0 +1,344 @@
+/* Per-city landing page configuration */
+window.CITY_PAGES = {
+  tampa: {
+    slug: "tampa",
+    name: "Tampa",
+    region: "Tampa Bay",
+    state: "FL",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Florida's Mobile",
+    headlineAccent: "Windshield",
+    headlineAfter: "Experts",
+    subhead: "<b>We come to you.</b> Same-day mobile windshield replacement across Tampa and the bay area.",
+    servicesLead:
+      "We come to your home, office, or roadside anywhere in Tampa — same-day windshield replacement with OEM-quality glass and a workmanship guarantee.",
+    whyTitle: "Why Tampa Trusts Us",
+    trustTitle: "Rated 5.0 by Tampa Drivers",
+    reviewsTitle: "What Tampa Drivers Are Saying",
+    areaTitle: "Proudly Serving Tampa Bay",
+    areaLead: "Wherever you are in Tampa or the surrounding bay area, our mobile team rolls out to you.",
+    footerTag: "Mobile auto glass & windshield replacement serving Tampa Bay.",
+    footerBadge: "Licensed & Insured · Tampa, FL",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg",
+    heroImageAlt: "Tampa skyline at night",
+    metaTitle: "Motorsport Autoglass — Tampa's Mobile Windshield Experts",
+    metaDescription:
+      "Mobile auto glass & windshield replacement in Tampa, FL. We come to you. Same-day service. Insurance accepted. Call (813) 838-5104 for a free quote.",
+    geoNames: ["tampa", "tampa bay", "ybor city", "westchase", "hyde park", "carrollwood", "town 'n' country"],
+    lat: 27.9506,
+    lng: -82.4572,
+  },
+  "st-petersburg": {
+    slug: "st-petersburg",
+    name: "St. Petersburg",
+    region: "Tampa Bay",
+    state: "FL",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "St. Pete's Mobile",
+    headlineAccent: "Auto Glass",
+    headlineAfter: "Experts",
+    subhead: "<b>We come to you.</b> Same-day windshield repair and replacement across St. Petersburg and Pinellas County.",
+    servicesLead:
+      "Sun, salt air, and coastal driving take a toll on your glass. We handle chips, cracks, and full replacements at your door.",
+    whyTitle: "Why St. Pete Trusts Us",
+    trustTitle: "Rated 5.0 by St. Petersburg Drivers",
+    reviewsTitle: "What St. Petersburg Drivers Are Saying",
+    areaTitle: "Serving St. Petersburg & Pinellas",
+    areaLead: "From downtown St. Pete to the beaches, our mobile technicians come to you.",
+    footerTag: "Mobile auto glass & windshield replacement serving St. Petersburg and Pinellas County.",
+    footerBadge: "Licensed & Insured · St. Petersburg, FL",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg",
+    heroImageAlt: "Tampa Bay area skyline at night",
+    metaTitle: "Motorsport Autoglass — St. Petersburg Mobile Auto Glass",
+    metaDescription:
+      "Mobile windshield replacement & auto glass repair in St. Petersburg, FL. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["st. petersburg", "st petersburg", "st pete", "saint petersburg", "pinellas", "pinellas park", "gulfport"],
+    lat: 27.7676,
+    lng: -82.6403,
+  },
+  clearwater: {
+    slug: "clearwater",
+    name: "Clearwater",
+    region: "Tampa Bay",
+    state: "FL",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Clearwater's Mobile",
+    headlineAccent: "Windshield",
+    headlineAfter: "Pros",
+    subhead: "<b>We come to you.</b> Fast windshield replacement for Clearwater residents, visitors, and beach commuters.",
+    servicesLead:
+      "Beach parking lots, resort driveways, or your home — we replace windshields with precision and clean up every shard.",
+    whyTitle: "Why Clearwater Chooses Us",
+    trustTitle: "Rated 5.0 by Clearwater Drivers",
+    reviewsTitle: "What Clearwater Drivers Are Saying",
+    areaTitle: "Serving Clearwater & the Beaches",
+    areaLead: "Clearwater, Clearwater Beach, and nearby Pinellas communities — we come to you.",
+    footerTag: "Mobile windshield replacement serving Clearwater and the Gulf beaches.",
+    footerBadge: "Licensed & Insured · Clearwater, FL",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg",
+    heroImageAlt: "Tampa Bay area skyline at night",
+    metaTitle: "Motorsport Autoglass — Clearwater Mobile Windshield Replacement",
+    metaDescription:
+      "Mobile windshield replacement in Clearwater, FL. Same-day service at your home, hotel, or workplace. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["clearwater", "clearwater beach", "dunedin", "safety harbor", "largo"],
+    lat: 27.9659,
+    lng: -82.8001,
+  },
+  brandon: {
+    slug: "brandon",
+    name: "Brandon",
+    region: "Tampa Bay",
+    state: "FL",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Brandon's Mobile",
+    headlineAccent: "Back Glass",
+    headlineAfter: "& Windshield Team",
+    subhead: "<b>We come to you.</b> Same-day auto glass service for Brandon, Riverview, and east Hillsborough families.",
+    servicesLead:
+      "SUV rear glass, sedan windshields, and everyday rock-chip repairs — done in your driveway with a workmanship guarantee.",
+    whyTitle: "Why Brandon Families Trust Us",
+    trustTitle: "Rated 5.0 by Brandon Drivers",
+    reviewsTitle: "What Brandon Drivers Are Saying",
+    areaTitle: "Serving Brandon & East Hillsborough",
+    areaLead: "Brandon, Riverview, Valrico, and surrounding communities — mobile service at your door.",
+    footerTag: "Mobile auto glass serving Brandon and east Hillsborough County.",
+    footerBadge: "Licensed & Insured · Brandon, FL",
+    featuredService: "back-glass",
+    heroImage: "/assets/cities/tampa-night.jpg",
+    heroImageAlt: "Tampa Bay area skyline at night",
+    metaTitle: "Motorsport Autoglass — Brandon Mobile Auto Glass",
+    metaDescription:
+      "Mobile windshield & back glass replacement in Brandon, FL. Same-day appointments at your home. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["brandon", "riverview", "valrico", "seffner", "plant city", "lithia"],
+    lat: 27.9378,
+    lng: -82.2859,
+  },
+  "wesley-chapel": {
+    slug: "wesley-chapel",
+    name: "Wesley Chapel",
+    region: "Tampa Bay",
+    state: "FL",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Wesley Chapel's",
+    headlineAccent: "ADAS",
+    headlineAfter: "Glass Experts",
+    subhead: "<b>We come to you.</b> Windshield replacement with camera recalibration for newer vehicles in Pasco County.",
+    servicesLead:
+      "Newer SUVs and sedans need more than glass — we replace windshields and recalibrate lane-assist cameras at your location.",
+    whyTitle: "Why Wesley Chapel Trusts Us",
+    trustTitle: "Rated 5.0 by Wesley Chapel Drivers",
+    reviewsTitle: "What Wesley Chapel Drivers Are Saying",
+    areaTitle: "Serving Wesley Chapel & Pasco",
+    areaLead: "Wesley Chapel, Lutz, Land O' Lakes, and nearby Pasco communities.",
+    footerTag: "Mobile windshield replacement & ADAS calibration serving Wesley Chapel and Pasco County.",
+    footerBadge: "Licensed & Insured · Wesley Chapel, FL",
+    featuredService: "adas",
+    heroImage: "/assets/cities/tampa-night.jpg",
+    heroImageAlt: "Tampa Bay area skyline at night",
+    metaTitle: "Motorsport Autoglass — Wesley Chapel Mobile Windshield & ADAS",
+    metaDescription:
+      "Mobile windshield replacement & ADAS calibration in Wesley Chapel, FL. Same-day service. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["wesley chapel", "lutz", "land o lakes", "land o' lakes", "new tampa", "pasco", "zephyrhills"],
+    lat: 28.176,
+    lng: -82.3501,
+  },
+
+  /* =====================================================================
+   * ARIZONA — Phoenix metro
+   * ---------------------------------------------------------------------
+   * NOTE: These five cities are an ASSUMED default (the core Phoenix-metro
+   * markets) because the actual Arizona service-area list wasn't provided.
+   * CONFIRM / RENAME / TRIM before going live — each is a self-contained
+   * block, so editing "name"/"slug" + copy is a quick change. If you
+   * remove or rename a slug, also update /_redirects and the matching
+   * /<slug>/ directory, plus the Service Area + footer chips in index.html.
+   *
+   * heroImage currently reuses the Tampa night photo as a PLACEHOLDER —
+   * swap each to real Arizona photography in /assets/cities/ when ready.
+   * Phone stays (813) 838-5104 per business; badges assert AZ licensing.
+   * ===================================================================== */
+  phoenix: {
+    slug: "phoenix",
+    name: "Phoenix",
+    region: "Phoenix metro",
+    state: "AZ",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Phoenix's Mobile",
+    headlineAccent: "Windshield",
+    headlineAfter: "Experts",
+    subhead: "<b>We come to you.</b> Same-day mobile windshield replacement across Phoenix and the Valley.",
+    servicesLead:
+      "From downtown high-rises to Ahwatukee driveways, our mobile team replaces windshields with OEM-quality glass — desert heat and dust handled.",
+    whyTitle: "Why Phoenix Trusts Us",
+    trustTitle: "Rated 5.0 by Phoenix Drivers",
+    reviewsTitle: "What Phoenix Drivers Are Saying",
+    areaTitle: "Proudly Serving Phoenix & the Valley",
+    areaLead: "Wherever you are in Phoenix or the surrounding Valley, our mobile team rolls out to you.",
+    footerTag: "Mobile auto glass & windshield replacement serving Phoenix and the Valley.",
+    footerBadge: "Licensed & Insured · Phoenix, AZ",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Phoenix photography
+    heroImageAlt: "City skyline at night",
+    metaTitle: "Motorsport Autoglass — Phoenix's Mobile Windshield Experts",
+    metaDescription:
+      "Mobile auto glass & windshield replacement in Phoenix, AZ. We come to you. Same-day service. Insurance accepted. Call (813) 838-5104 for a free quote.",
+    geoNames: ["phoenix", "phx", "ahwatukee", "arcadia", "maryvale", "the valley"],
+    lat: 33.4484,
+    lng: -112.074,
+  },
+  scottsdale: {
+    slug: "scottsdale",
+    name: "Scottsdale",
+    region: "North Valley",
+    state: "AZ",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Scottsdale's Mobile",
+    headlineAccent: "ADAS",
+    headlineAfter: "Glass Experts",
+    subhead: "<b>We come to you.</b> Windshield replacement with camera recalibration for newer vehicles across Scottsdale.",
+    servicesLead:
+      "Newer luxury SUVs and sedans need more than glass — we replace windshields and recalibrate lane-assist cameras at your home or office.",
+    whyTitle: "Why Scottsdale Trusts Us",
+    trustTitle: "Rated 5.0 by Scottsdale Drivers",
+    reviewsTitle: "What Scottsdale Drivers Are Saying",
+    areaTitle: "Serving Scottsdale & the North Valley",
+    areaLead: "From Old Town to North Scottsdale, our mobile technicians come to you.",
+    footerTag: "Mobile windshield replacement & ADAS calibration serving Scottsdale.",
+    footerBadge: "Licensed & Insured · Scottsdale, AZ",
+    featuredService: "adas",
+    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Scottsdale photography
+    heroImageAlt: "City skyline at night",
+    metaTitle: "Motorsport Autoglass — Scottsdale Mobile Windshield & ADAS",
+    metaDescription:
+      "Mobile windshield replacement & ADAS calibration in Scottsdale, AZ. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["scottsdale", "old town scottsdale", "north scottsdale", "fountain hills", "paradise valley"],
+    lat: 33.4942,
+    lng: -111.9261,
+  },
+  mesa: {
+    slug: "mesa",
+    name: "Mesa",
+    region: "East Valley",
+    state: "AZ",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Mesa's Mobile",
+    headlineAccent: "Back Glass",
+    headlineAfter: "& Windshield Team",
+    subhead: "<b>We come to you.</b> Same-day auto glass service for Mesa, Gilbert, and East Valley families.",
+    servicesLead:
+      "SUV rear glass, sedan windshields, and everyday rock-chip repairs — done in your driveway with a workmanship guarantee.",
+    whyTitle: "Why Mesa Families Trust Us",
+    trustTitle: "Rated 5.0 by Mesa Drivers",
+    reviewsTitle: "What Mesa Drivers Are Saying",
+    areaTitle: "Serving Mesa & the East Valley",
+    areaLead: "Mesa, Gilbert, Apache Junction, and surrounding East Valley communities — mobile service at your door.",
+    footerTag: "Mobile auto glass serving Mesa and the East Valley.",
+    footerBadge: "Licensed & Insured · Mesa, AZ",
+    featuredService: "back-glass",
+    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Mesa photography
+    heroImageAlt: "City skyline at night",
+    metaTitle: "Motorsport Autoglass — Mesa Mobile Auto Glass",
+    metaDescription:
+      "Mobile windshield & back glass replacement in Mesa, AZ. Same-day appointments at your home. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["mesa", "east mesa", "apache junction", "red mountain"],
+    lat: 33.4152,
+    lng: -111.8315,
+  },
+  tempe: {
+    slug: "tempe",
+    name: "Tempe",
+    region: "East Valley",
+    state: "AZ",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Tempe's Mobile",
+    headlineAccent: "Windshield",
+    headlineAfter: "Pros",
+    subhead: "<b>We come to you.</b> Fast windshield replacement for Tempe residents, students, and commuters.",
+    servicesLead:
+      "Campus lots, apartment complexes, or your home — we replace windshields with precision and clean up every shard.",
+    whyTitle: "Why Tempe Chooses Us",
+    trustTitle: "Rated 5.0 by Tempe Drivers",
+    reviewsTitle: "What Tempe Drivers Are Saying",
+    areaTitle: "Serving Tempe & the East Valley",
+    areaLead: "From ASU to South Tempe, our mobile team comes to you.",
+    footerTag: "Mobile windshield replacement serving Tempe and the East Valley.",
+    footerBadge: "Licensed & Insured · Tempe, AZ",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Tempe photography
+    heroImageAlt: "City skyline at night",
+    metaTitle: "Motorsport Autoglass — Tempe Mobile Windshield Replacement",
+    metaDescription:
+      "Mobile windshield replacement in Tempe, AZ. Same-day service at your home, campus, or workplace. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["tempe", "asu", "arizona state", "south tempe"],
+    lat: 33.4255,
+    lng: -111.94,
+  },
+  chandler: {
+    slug: "chandler",
+    name: "Chandler",
+    region: "Southeast Valley",
+    state: "AZ",
+    statusLabel: "NOW BOOKING",
+    headlineBefore: "Chandler's Mobile",
+    headlineAccent: "Windshield",
+    headlineAfter: "Experts",
+    subhead: "<b>We come to you.</b> Same-day windshield repair and replacement across Chandler and the southeast Valley.",
+    servicesLead:
+      "Tech-corridor commutes are tough on glass. We handle chips, cracks, and full replacements at your door.",
+    whyTitle: "Why Chandler Trusts Us",
+    trustTitle: "Rated 5.0 by Chandler Drivers",
+    reviewsTitle: "What Chandler Drivers Are Saying",
+    areaTitle: "Serving Chandler & the South Valley",
+    areaLead: "Chandler, Gilbert, Sun Lakes, and nearby southeast Valley communities — we come to you.",
+    footerTag: "Mobile auto glass & windshield replacement serving Chandler and the southeast Valley.",
+    footerBadge: "Licensed & Insured · Chandler, AZ",
+    featuredService: "windshield",
+    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Chandler photography
+    heroImageAlt: "City skyline at night",
+    metaTitle: "Motorsport Autoglass — Chandler Mobile Auto Glass",
+    metaDescription:
+      "Mobile windshield replacement & auto glass repair in Chandler, AZ. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",
+    geoNames: ["chandler", "sun lakes", "ocotillo", "gilbert"],
+    lat: 33.3062,
+    lng: -111.8413,
+  },
+};
+
+window.CITY_SLUGS = Object.keys(window.CITY_PAGES);
+window.CITY_DEFAULT = "tampa"; // geographic fallback for the router's nearest-city search
+
+/* Neutral, state-agnostic content for the bare homepage ("/").
+   city-page.js applies this on the root path instead of forcing a single
+   city, so motorsportautoglass.com reads as a dual-state brand page.
+   Per-city pages (/tampa/, /phoenix/, …) still use CITY_PAGES above. */
+window.HOME_CONTENT = {
+  statusLabel: "NOW BOOKING",
+  headlineBefore: "Florida & Arizona's Mobile",
+  headlineAccent: "Windshield",
+  headlineAfter: "Experts",
+  subhead: "<b>We come to you.</b> Same-day mobile windshield replacement across Florida and Arizona.",
+  servicesLead:
+    "From the Tampa Bay area to the Phoenix metro, our mobile team comes to your home, office, or roadside — same-day windshield replacement with OEM-quality glass and a workmanship guarantee.",
+  whyTitle: "Why Drivers Trust Us",
+  trustTitle: "Rated 5.0 by Drivers",
+  reviewsTitle: "What Drivers Are Saying",
+  areaTitle: "Proudly Serving Florida & Arizona",
+  areaLead: "From the Tampa Bay area to the Phoenix metro, our mobile team rolls out to you.",
+  footerTag: "Mobile auto glass & windshield replacement serving Florida & Arizona.",
+  footerBadge: "Licensed & Insured · FL & AZ",
+  featuredService: "windshield",
+  heroImage: "/assets/cities/tampa-night.jpg",
+  heroImageAlt: "City skyline at night",
+  metaTitle: "Motorsport Autoglass — Florida & Arizona's Mobile Windshield Experts",
+  metaDescription:
+    "Mobile auto glass & windshield replacement across Florida & Arizona. We come to you. Same-day service. Insurance accepted. Call (813) 838-5104 for a free quote.",
+};
+
+window.SERVICE_KEYS = {
+  windshield: { num: "01", title: "Windshield Replacement" },
+  "back-glass": { num: "02", title: "Back Glass Replacement" },
+  adas: { num: "03", title: "ADAS Calibration" },
+};

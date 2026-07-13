@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book Your Service · Motorsport Autoglass</title>
+<meta name="description" content="Book mobile auto glass service in Tampa Bay. Tell us your vehicle, what needs fixed, and when — we come to you. Same-day windshield replacement & repair." />
+<meta name="robots" content="index,follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#1A1A1A;--accent:#00B4D8;--accent-bright:#48CAE4;--accent-soft:#90E0EF;--accent-deep:#0096C7;
+  --ink:#06181f;--white:#fff;--silver:#C0C0C0;--muted:#8B9094;--dim:#6c7073;--e:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background-color:var(--bg);color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;color-scheme:dark;
+  background-image:radial-gradient(1100px 620px at 84% -8%, rgba(0,180,216,0.15), transparent 60%),radial-gradient(880px 520px at -12% 14%, rgba(0,180,216,0.08), transparent 55%),radial-gradient(900px 700px at 50% 116%, rgba(0,150,199,0.10), transparent 60%);
+  background-attachment:fixed;
+}
+::selection{background:var(--accent);color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:6px}
+a{color:inherit}
+select option{background:#1d1d1d;color:#fff}
+input::placeholder{color:var(--dim)}
+
+@keyframes bkStepIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes bkPop{0%{opacity:0;transform:scale(.4)}70%{transform:scale(1.1)}100%{opacity:1;transform:scale(1)}}
+@keyframes bkRowIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:none}}
+@keyframes bkShine{0%{transform:translateX(-130%)}55%,100%{transform:translateX(170%)}}
+@keyframes bkRing{0%{box-shadow:0 0 0 0 rgba(0,180,216,.4)}100%{box-shadow:0 0 0 22px rgba(0,180,216,0)}}
+@keyframes bkDraw{to{stroke-dashoffset:0}}
+
+/* ---------- layout ---------- */
+.bk-shell{min-height:100vh;display:flex;flex-direction:column}
+.bk-header{position:sticky;top:0;z-index:50;background:rgba(20,20,20,.82);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid rgba(255,255,255,.07)}
+.bk-header-inner{width:min(1160px,92vw);margin:0 auto;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.bk-logo{display:inline-flex;align-items:center;text-decoration:none}
+.bk-logo img{height:46px;width:auto;display:block;filter:drop-shadow(0 5px 16px rgba(0,180,216,.22))}
+.bk-header-right{display:flex;align-items:center;gap:18px}
+.bk-phone{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.92rem;transition:color .2s}
+.bk-phone:hover{color:var(--accent-bright)}
+.bk-pill{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.14em;color:var(--silver);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:8px 15px;background:rgba(255,255,255,.03);white-space:nowrap}
+.bk-track{height:3px;background:rgba(255,255,255,.05)}
+.bk-bar{display:block;height:3px;width:22%;background:linear-gradient(90deg,#0096C7,#48CAE4,#90E0EF);box-shadow:0 0 12px rgba(0,180,216,.5);transition:width .6s var(--e)}
+
+.bk-main{flex:1;width:min(1160px,92vw);margin:0 auto;padding:46px 0 90px;display:flex;flex-wrap:wrap;gap:48px;align-items:flex-start}
+.bk-col{flex:1 1 520px;min-width:0;max-width:660px}
+
+.bk-footer{border-top:1px solid rgba(255,255,255,.06);padding:22px 0;text-align:center;color:var(--dim);font-size:.78rem}
+
+/* ---------- section headings ---------- */
+.bk-sec{animation:bkStepIn .5s var(--e) both}
+.bk-kicker{display:inline-flex;align-items:center;gap:10px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+.bk-kicker-line{width:26px;height:2px;background:linear-gradient(90deg,#00B4D8,transparent)}
+.bk-h1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(1.7rem,3.6vw,2.4rem);line-height:1.12;letter-spacing:-.02em;margin:0}
+.bk-h1 em{font-style:normal;color:var(--accent-bright)}
+.bk-h2{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.25rem;letter-spacing:-.01em;margin:34px 0 16px}
+.bk-sub{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--silver);margin:0 0 10px}
+.bk-lead{color:var(--silver);font-size:1rem;line-height:1.6;margin:14px 0 32px}
+.bk-hint{color:var(--muted);font-size:.84rem;margin:0 0 8px}
+
+/* ---------- form fields ---------- */
+.bk-field{margin-bottom:18px;transition:opacity .3s}
+.bk-label{display:block;font-size:.76rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--silver);margin-bottom:8px}
+.bk-req{color:var(--accent)}
+.bk-select,.bk-input{width:100%;box-sizing:border-box;padding:14px;border-radius:11px;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.28);color:#fff;font-family:'Inter',sans-serif;font-size:.97rem}
+.bk-select{cursor:pointer}
+.bk-select:focus,.bk-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,180,216,.16);outline:none}
+.bk-select:disabled{cursor:not-allowed}
+.bk-row{display:flex;flex-wrap:wrap;gap:12px}
+
+/* ---------- buttons ---------- */
+.bk-actions{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:34px}
+.bk-actions.end{justify-content:flex-end}
+.bk-btn{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border-radius:12px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.98rem;color:var(--ink);background:linear-gradient(135deg,#48CAE4,#0096C7);box-shadow:0 12px 32px -12px rgba(0,180,216,.5);transition:transform .25s,box-shadow .25s,opacity .25s}
+.bk-btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px rgba(0,180,216,.55)}
+.bk-btn.is-disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.bk-btn.is-disabled:hover{transform:none;box-shadow:none}
+.bk-btn-lg{padding:17px 34px;font-size:1.02rem}
+.bk-ghost{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.02);color:var(--silver);font-family:'Montserrat',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .25s}
+.bk-ghost:hover{border-color:var(--accent);color:var(--accent-bright)}
+
+/* ---------- selectable options (shared) ---------- */
+.bk-opt{position:relative;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.10);cursor:pointer;transition:all .25s var(--e)}
+.bk-opt:hover{transform:translateY(-3px);border-color:var(--accent)}
+.bk-opt.is-on{border-color:var(--accent);background:rgba(0,180,216,.10);box-shadow:0 0 0 1px rgba(0,180,216,.35),0 16px 36px -22px rgba(0,180,216,.6)}
+.bk-opt .g-ic{stroke:#9AA0A4;transition:stroke .25s}
+.bk-opt.is-on .g-ic{stroke:var(--accent-bright)}
+.bk-opt .g-fill{fill:rgba(255,255,255,.05);transition:fill .25s}
+.bk-opt.is-on .g-fill{fill:rgba(0,180,216,.45)}
+.bk-opt .g-dot{fill:#9AA0A4;stroke:none;transition:fill .25s}
+.bk-opt.is-on .g-dot{fill:var(--accent-bright)}
+.bk-check{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#48CAE4,#0096C7);display:grid;place-items:center;animation:bkPop .3s both}
+.bk-opt-label{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.92rem;color:#fff}
+
+.bk-cardrow{display:flex;gap:14px;flex-wrap:wrap}
+.bk-glass-card{flex:1 1 150px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:22px 12px 18px;border-radius:14px}
+.bk-damage-card{flex:1 1 230px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:left;padding:20px;border-radius:14px}
+.bk-damage-title{font-weight:600;color:#fff;font-size:.97rem;line-height:1.45}
+.bk-damage-tag{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;color:var(--accent-bright)}
+.bk-side-card{flex:1 1 200px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:22px 14px 18px;border-radius:14px}
+
+/* ---------- coverage step ---------- */
+.bk-search{position:relative;margin-bottom:16px}
+.bk-search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%)}
+.bk-search .bk-input{padding-left:42px}
+.bk-ins-list{display:flex;flex-wrap:wrap;gap:10px}
+.bk-ins-chip{display:inline-flex;align-items:center;gap:10px;padding:11px 16px 11px 11px;border-radius:12px}
+.bk-ins-chip:hover{transform:translateY(-2px)}
+.bk-ins-mono{width:30px;height:30px;border-radius:50%;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.3);color:var(--accent-bright);display:grid;place-items:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem}
+.bk-ins-name{font-weight:600;font-size:.93rem;color:#fff}
+.bk-noins{color:var(--muted);font-size:.88rem;margin:14px 0 0}
+.bk-noins a{color:var(--accent-bright);text-decoration:none}
+.bk-or{display:flex;align-items:center;gap:14px;margin:24px 0}
+.bk-or span.line{flex:1;height:1px;background:rgba(255,255,255,.08)}
+.bk-or span.txt{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.bk-pay{width:100%;display:flex;align-items:center;gap:14px;text-align:left;padding:16px 18px;border-radius:14px}
+.bk-pay:hover{transform:none;border-color:var(--accent)}
+.bk-pay-ic{width:44px;height:44px;flex:none;border-radius:12px;background:rgba(0,180,216,.10);border:1px solid rgba(0,180,216,.25);display:grid;place-items:center}
+.bk-pay-ic svg{stroke:#9AA0A4;transition:stroke .25s}
+.bk-pay.is-on .bk-pay-ic svg{stroke:var(--accent-bright)}
+.bk-pay-title{display:block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;color:#fff}
+.bk-pay-desc{display:block;font-size:.86rem;color:var(--muted);margin-top:2px}
+.bk-radio{width:22px;height:22px;flex:none;border-radius:50%;border:2px solid rgba(255,255,255,.25);display:grid;place-items:center;transition:all .2s}
+.bk-pay.is-on .bk-radio{border-color:var(--accent-bright)}
+.bk-radio-dot{width:10px;height:10px;border-radius:50%;background:var(--accent-bright);animation:bkPop .25s both}
+
+/* ---------- schedule step ---------- */
+.bk-days{display:flex;gap:10px;overflow-x:auto;padding-bottom:8px}
+.bk-date-card{flex:none;min-width:76px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 10px;border-radius:12px}
+.bk-date-card:hover{transform:translateY(-2px)}
+.bk-date-dow{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.bk-date-day{font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.35rem;color:#fff;line-height:1.1}
+.bk-date-mon{font-size:.7rem;color:var(--muted)}
+.bk-times{display:flex;flex-wrap:wrap;gap:10px}
+.bk-time-chip{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:999px;font-family:'Montserrat',sans-serif;font-weight:600;font-size:.9rem;color:#fff}
+.bk-time-chip:hover{transform:translateY(-2px)}
+.bk-time-chip svg{stroke:#9AA0A4;transition:stroke .25s}
+.bk-time-chip.is-on svg{stroke:var(--accent-bright)}
+.bk-fineprint{color:var(--dim);font-size:.8rem;margin:16px 0 0;text-align:right}
+
+/* ---------- info note ---------- */
+.bk-note{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding:14px 16px;border-radius:12px;background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.25);animation:bkRowIn .35s both}
+.bk-note svg{flex:none;margin-top:2px}
+.bk-note p{margin:0;font-size:.9rem;color:var(--silver);line-height:1.55}
+.bk-note b{display:block;font-weight:600;color:#fff}
+
+/* ---------- confirmation ---------- */
+.bk-conf{animation:bkStepIn .5s var(--e) both;max-width:600px;margin:0 auto;text-align:center}
+.bk-conf-check{width:86px;height:86px;border-radius:50%;margin:10px auto 26px;display:grid;place-items:center;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.4);animation:bkPop .5s both, bkRing 2.2s ease-out .5s infinite}
+.bk-conf-check path{stroke-dasharray:30;stroke-dashoffset:30;animation:bkDraw .6s var(--e) .25s both}
+.bk-conf-h1{font-family:'Montserrat',sans-serif;font-weight:900;font-size:clamp(1.9rem,4.4vw,2.7rem);letter-spacing:-.02em;line-height:1.08;margin:0}
+.bk-conf-sub{color:var(--silver);font-size:1.02rem;line-height:1.6;margin:16px auto 30px;max-width:44ch}
+.bk-conf-card{text-align:left;padding:24px 26px;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));box-shadow:0 40px 80px -40px rgba(0,0,0,.9)}
+.bk-conf-eyebrow{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+.bk-conf-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.bk-conf-row .k{font-size:.76rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);flex:none}
+.bk-conf-row .v{font-weight:600;font-size:.94rem;color:#fff;text-align:right}
+.bk-steps{display:flex;flex-direction:column;gap:14px}
+.bk-step-item{display:flex;gap:14px;align-items:flex-start}
+.bk-step-num{width:28px;height:28px;flex:none;border-radius:50%;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.35);color:var(--accent-bright);display:grid;place-items:center;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.82rem}
+.bk-step-item p{margin:2px 0 0;font-size:.92rem;color:var(--silver);line-height:1.55}
+.bk-step-item b{color:#fff;font-weight:600}
+.bk-conf-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:30px}
+
+/* ---------- summary rail ---------- */
+.bk-rail{flex:1 1 300px;max-width:380px;position:sticky;top:96px;align-self:flex-start;border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:22px;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.012));box-shadow:0 30px 60px -40px rgba(0,0,0,.9)}
+.bk-rail-title{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:0 0 16px}
+.bk-diagram{position:relative;overflow:hidden;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.06);padding:22px 16px 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.bk-diagram .shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 42%,rgba(144,224,239,.09) 50%,transparent 58%);animation:bkShine 4.5s var(--e) infinite;pointer-events:none}
+.bk-diagram .cap{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);position:relative}
+.bk-rail-empty{color:var(--dim);font-size:.86rem;font-style:italic;margin:18px 2px 6px}
+.bk-rail-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.07);animation:bkRowIn .4s both}
+.bk-rail-row .k{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);flex:none}
+.bk-rail-row .v{font-weight:600;font-size:.9rem;color:#fff;text-align:right}
+.bk-rail-badges{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+.bk-rail-badges span{display:inline-flex;align-items:center;gap:8px;font-size:.84rem;color:var(--muted)}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+}
+</style>
+</head>
+<body>
+<div class="bk-shell">
+  <header class="bk-header">
+    <div class="bk-header-inner">
+      <a class="bk-logo" href="/" aria-label="Motorsport Autoglass home">
+        <img src="/assets/logo-light.png" alt="Motorsport Autoglass" />
+      </a>
+      <div class="bk-header-right">
+        <a class="bk-phone" href="tel:+18138385104">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#00B4D8" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l1.6 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.6V18a2 2 0 0 1-2.2 2A14.5 14.5 0 0 1 3 6.2 2 2 0 0 1 5 4Z"></path></svg>
+          (813) 838-5104
+        </a>
+        <span class="bk-pill" id="bkPill">STEP 1 OF 4</span>
+      </div>
+    </div>
+    <div class="bk-track"><span class="bk-bar" id="bkBar"></span></div>
+  </header>
+
+  <main class="bk-main">
+    <div class="bk-col" id="bkContent"></div>
+    <aside class="bk-rail" id="bkRail" data-label="Summary rail"></aside>
+  </main>
+
+  <footer class="bk-footer">© 2026 Motorsport Autoglass · Licensed &amp; Insured · Tampa Bay, FL</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =================== DATA =================== */
+  var VPIC = "https://vpic.nhtsa.dot.gov/api/vehicles";
+  var VPIC_TYPES = ["car", "truck", "multipurpose passenger vehicle"];
+  var MAKE_OTHER = "Other (not listed)";
+  var MODEL_OTHER = "Other (not listed)";
+  var BODY_STYLES = ["Sedan", "Coupe", "Hatchback", "SUV / Crossover", "Pickup Truck", "Van / Minivan", "Convertible", "Wagon", "Commercial Truck", "Other"];
+  var FALLBACK_MAKES = ["Acura","Audi","BMW","Buick","Cadillac","Chevrolet","Chrysler","Dodge","Ford","GMC","Honda","Hyundai","Infiniti","Jeep","Kia","Lexus","Lincoln","Mazda","Mercedes-Benz","Mitsubishi","Nissan","Ram","Subaru","Tesla","Toyota","Volkswagen","Volvo",MAKE_OTHER];
+  var INSURERS = ["GEICO","State Farm","Progressive","Allstate","USAA","Liberty Mutual","Farmers","Nationwide","Travelers","American Family","AAA / Auto Club","The General","Direct Auto","Kemper","Mercury","Safeco"];
+  var TIMES = ["8–11 AM","11 AM–2 PM","2–5 PM","5–7 PM"];
+  var CITIES = ["Tampa","St. Petersburg","Clearwater","Brandon","Wesley Chapel","Phoenix","Scottsdale","Mesa","Tempe","Chandler","Other / nearby"];
+
+  var _makesCache = null;
+  var _modelsCache = {};
+
+  function fetchVpic(path){
+    return fetch(VPIC + path).then(function(r){
+      if (!r.ok) throw new Error("VPIC " + r.status);
+      return r.json();
+    });
+  }
+  function uniqSort(arr){
+    var seen = {}, out = [];
+    for (var i = 0; i < arr.length; i++){
+      var v = arr[i];
+      if (!v || seen[v]) continue;
+      seen[v] = 1;
+      out.push(v);
+    }
+    out.sort(function(a, b){ return a.localeCompare(b); });
+    return out;
+  }
+  function loadAllMakes(){
+    if (_makesCache) return Promise.resolve(_makesCache);
+    return Promise.all(VPIC_TYPES.map(function(type){
+      return fetchVpic("/GetMakesForVehicleType/" + encodeURIComponent(type) + "?format=json");
+    })).then(function(results){
+      var names = [];
+      results.forEach(function(data){
+        (data.Results || []).forEach(function(r){ if (r.MakeName) names.push(r.MakeName); });
+      });
+      _makesCache = uniqSort(names);
+      _makesCache.push(MAKE_OTHER);
+      return _makesCache;
+    }).catch(function(){
+      _makesCache = FALLBACK_MAKES.slice();
+      return _makesCache;
+    });
+  }
+  function loadModelsFor(make, year){
+    var key = year + "|" + make;
+    if (_modelsCache[key]) return Promise.resolve(_modelsCache[key]);
+    return fetchVpic("/GetModelsForMakeYear/make/" + encodeURIComponent(make) + "/modelyear/" + encodeURIComponent(year) + "?format=json")
+      .then(function(data){
+        var models = uniqSort((data.Results || []).map(function(r){ return r.Model_Name; }).filter(Boolean));
+        if (!models.length) models = [MODEL_OTHER];
+        else models.push(MODEL_OTHER);
+        _modelsCache[key] = models;
+        return models;
+      }).catch(function(){
+        var models = [MODEL_OTHER];
+        _modelsCache[key] = models;
+        return models;
+      });
+  }
+  function loadMakesIntoState(){
+    set({ makesLoading: true });
+    renderStepAndRail();
+    loadAllMakes().then(function(makes){
+      set({ makesList: makes, makesLoading: false });
+      renderStepAndRail();
+    });
+  }
+  function loadModelsIntoState(make, year){
+    set({ modelsLoading: true, model: "", style: "", modelOther: "" });
+    renderStepAndRail();
+    loadModelsFor(make, year).then(function(models){
+      set({ modelsList: models, modelsLoading: false });
+      renderStepAndRail();
+    });
+  }
+  function vehicleMakeLabel(s){
+    return s.make === MAKE_OTHER ? (s.makeOther || "").trim() : s.make;
+  }
+  function vehicleModelLabel(s){
+    if (s.make === MAKE_OTHER) return (s.modelOther || "").trim();
+    return s.model === MODEL_OTHER ? (s.modelOther || "").trim() : s.model;
+  }
+
+  /* =================== STATE =================== */
+  var state = {
+    step:1,
+    year:"", make:"", model:"", style:"",
+    makeOther:"", modelOther:"",
+    makesList:[], modelsList:[],
+    makesLoading:false, modelsLoading:false,
+    glass:"", damage:"",
+    insurer:"", payOwn:false, insQuery:"",
+    dateIdx:null, time:"", city:"Tampa", address:"",
+    name:"", phone:"", email:""
+  };
+
+  var content = document.getElementById("bkContent");
+  var rail = document.getElementById("bkRail");
+  var pill = document.getElementById("bkPill");
+  var bar  = document.getElementById("bkBar");
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* =================== HELPERS =================== */
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];
+    });
+  }
+  function set(patch){ for (var k in patch) state[k] = patch[k]; }
+  function on(cond){ return cond ? " is-on" : ""; }
+
+  var _dateCache = null;
+  function getDates(){
+    if (_dateCache) return _dateCache;
+    var dows = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var mons = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var out = [], n = new Date();
+    for (var i = 0; i < 7; i++){
+      var d = new Date(n.getFullYear(), n.getMonth(), n.getDate() + i);
+      var dow = i === 0 ? "Today" : dows[d.getDay()];
+      out.push({ dow: dow, day: String(d.getDate()), mon: mons[d.getMonth()], full: dow + ", " + mons[d.getMonth()] + " " + d.getDate() });
+    }
+    _dateCache = out;
+    return out;
+  }
+
+  function fmtPhone(v){
+    var d = String(v).replace(/\D/g, "").slice(0, 10);
+    var a = d.slice(0,3), b = d.slice(3,6), c = d.slice(6,10);
+    if (d.length > 6) return "(" + a + ") " + b + "-" + c;
+    if (d.length > 3) return "(" + a + ") " + b;
+    if (d.length > 0) return "(" + a;
+    return "";
+  }
+
+  /* =================== DERIVED VALUES =================== */
+  function derive(){
+    var s = state;
+    var years = []; for (var y = 2026; y >= 1990; y--) years.push(String(y));
+    var makes = s.makesList;
+    var models = s.modelsList;
+    var stylesList = BODY_STYLES;
+    var makeLbl = vehicleMakeLabel(s);
+    var modelLbl = vehicleModelLabel(s);
+    var freeMake = s.make === MAKE_OTHER;
+    var freeModel = freeMake || s.model === MODEL_OTHER;
+    var v1 = !!(s.year && makeLbl && modelLbl && s.style);
+    var vehLabel = (s.year && makeLbl && modelLbl) ? (s.year + " " + makeLbl + " " + modelLbl) : "your vehicle";
+    var vehShort = (makeLbl && modelLbl) ? (makeLbl + " " + modelLbl) : "vehicle";
+
+    var styleReady = false;
+    if (makeLbl){
+      if (freeMake) styleReady = !!(s.makeOther.trim() && s.modelOther.trim());
+      else if (s.model) styleReady = s.model !== MODEL_OTHER || !!(s.modelOther.trim());
+    }
+
+    var isWs = s.glass === "windshield", isSide = s.glass === "side", isRear = s.glass === "rear";
+    var v2 = !!(s.glass && s.damage);
+    var serviceLabel = "";
+    if (isWs) serviceLabel = s.damage === "repair" ? "Rock Chip Repair" : "Windshield Replacement";
+    if (isSide) serviceLabel = "Side Window Replacement" + (s.damage ? " · " + (s.damage === "driver" ? "Driver side" : "Passenger side") : "");
+    if (isRear) serviceLabel = "Back Glass Replacement";
+
+    var q = (s.insQuery || "").trim().toLowerCase();
+    var filtered = q ? INSURERS.filter(function(n){ return n.toLowerCase().indexOf(q) !== -1; }) : INSURERS.slice(0, 8);
+    filtered = filtered.slice(0, 8);
+    var noIns = !!q && filtered.length === 0;
+    var v3 = !!(s.insurer || s.payOwn);
+    var covTitle = s.payOwn ? "Pay on my own — simple flat pricing" : ("Great — we work with " + (s.insurer || "them") + " every week.");
+    var covBody = s.payOwn
+      ? "We'll text you an exact quote before your appointment. No claims paperwork, and repairs start around $89."
+      : "We verify your coverage and file the whole claim for you. With comprehensive coverage, chip repairs are often $0 out of pocket.";
+    var coverageLabel = s.payOwn ? "Pay on my own" : s.insurer;
+
+    var dates = getDates();
+    var v4 = s.dateIdx !== null && !!(s.time && s.address && s.name && s.phone);
+    var apptLabel = (s.dateIdx !== null && s.time) ? (dates[s.dateIdx].full + " · " + s.time) : "";
+
+    var summaryRows = [];
+    if (s.year && makeLbl && modelLbl) summaryRows.push({ label: "Vehicle", value: s.year + " " + makeLbl + " " + modelLbl + (s.style ? " · " + s.style : "") });
+    if (serviceLabel && (isRear || s.damage)) summaryRows.push({ label: "Service", value: serviceLabel });
+    if (coverageLabel) summaryRows.push({ label: "Coverage", value: coverageLabel });
+    if (apptLabel) summaryRows.push({ label: "When", value: apptLabel });
+    if (s.address) summaryRows.push({ label: "Where", value: s.address + ", " + s.city });
+
+    var confirmRows = summaryRows.slice();
+    if (s.name) confirmRows.push({ label: "Contact", value: s.name + (s.phone ? " · " + s.phone : "") });
+
+    var firstName = (s.name || "").trim().split(/\s+/)[0] || "";
+    var confTitle = firstName ? ("You're booked, " + firstName + "!") : "You're booked!";
+    var confSub = "A confirmation text is headed to " + (s.phone || "your phone") + ". Your tech will text again when they're on the way to " + (s.address || "you") + ".";
+
+    var diagCaption = s.glass ? ({ windshield: "Windshield", side: (s.damage === "passenger" ? "Passenger side window" : "Driver side window"), rear: "Back glass" })[s.glass] : "Select your glass";
+    var pct = { 1: "22%", 2: "46%", 3: "70%", 4: "90%", 5: "100%" }[s.step];
+
+    return {
+      years: years, makes: makes, models: models, stylesList: stylesList,
+      freeMake: freeMake, freeModel: freeModel, styleReady: styleReady,
+      v1: v1, vehLabel: vehLabel, vehShort: vehShort,
+      isWs: isWs, isSide: isSide, isRear: isRear, v2: v2, serviceLabel: serviceLabel,
+      filtered: filtered, noIns: noIns, v3: v3, covTitle: covTitle, covBody: covBody, coverageLabel: coverageLabel,
+      dates: dates, v4: v4, apptLabel: apptLabel,
+      summaryRows: summaryRows, confirmRows: confirmRows, confTitle: confTitle, confSub: confSub,
+      diagCaption: diagCaption, pct: pct
+    };
+  }
+
+  /* =================== ICON PARTIALS =================== */
+  var ARROW = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="M13 6l6 6-6 6"></path></svg>';
+  var BACK = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"></path><path d="M11 18l-6-6 6-6"></path></svg>';
+  var CHECKBADGE = '<span class="bk-check"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#06181f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"></path></svg></span>';
+  var SHIELD = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#48CAE4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 2.8v5.2c0 4.4-3 7.4-7 8.9-4-1.5-7-4.5-7-8.9V5.8L12 3Z"></path><path d="M8.8 12l2.2 2.2 4.2-4.4"></path></svg>';
+
+  function svgWs(){
+    return '<svg viewBox="0 0 72 56" width="66" height="52" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="g-ic">'
+      + '<path d="M18 27 C20 12 52 12 54 27"></path>'
+      + '<path class="g-fill" d="M21 26 C23 15 49 15 51 26 C41 24 31 24 21 26 Z"></path>'
+      + '<rect x="10" y="27" width="52" height="17" rx="6"></rect>'
+      + '<rect x="16" y="32" width="10" height="4" rx="2"></rect>'
+      + '<rect x="46" y="32" width="10" height="4" rx="2"></rect>'
+      + '<path d="M16 44 a5 5 0 0 0 10 0 M46 44 a5 5 0 0 0 10 0"></path></svg>';
+  }
+  function svgSide(flip){
+    return '<svg viewBox="0 0 84 48" width="76" height="44" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="g-ic"' + (flip ? ' style="transform:scaleX(-1)"' : '') + '>'
+      + '<path d="M6 36 V30 C6 26 9 24 14 23 L23 12 C25 9.5 28 8 32 8 H48 C54 8 59 10.5 63 15 L68 21 C74 22 78 25 78 29 V36"></path>'
+      + '<path d="M6 36 H15 M33 36 H51 M69 36 H78"></path>'
+      + '<circle cx="24" cy="37" r="7"></circle><circle cx="60" cy="37" r="7"></circle>'
+      + '<path class="g-fill" d="M33 12 L45 12 L45 22 L27 22 Z"></path>'
+      + '<path d="M49 12 H55 C58 12 61 14 63 17 L66 22 H49 Z"></path></svg>';
+  }
+  function svgRear(){
+    return '<svg viewBox="0 0 48 64" width="42" height="52" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="g-ic">'
+      + '<rect x="9" y="4" width="30" height="56" rx="13"></rect>'
+      + '<path d="M9 20 H4 M39 20 H44"></path>'
+      + '<path d="M15 19 C19 15 29 15 33 19"></path>'
+      + '<path class="g-fill" d="M14 46 C19 51 29 51 34 46 C34 50 32 53 29 54.5 C26 56 22 56 19 54.5 C16 53 14 50 14 46 Z"></path></svg>';
+  }
+
+  function optionsHTML(list, current, placeholder){
+    var h = '<option value="">' + esc(placeholder) + '</option>';
+    for (var i = 0; i < list.length; i++){
+      var item = list[i];
+      h += '<option value="' + esc(item) + '"' + (item === current ? ' selected' : '') + '>' + esc(item) + '</option>';
+    }
+    return h;
+  }
+
+  /* =================== STEP RENDERERS =================== */
+  function step1(d){
+    var s = state;
+    var makePh = s.makesLoading ? "Loading makes…" : "Select make";
+    var modelPh = s.modelsLoading ? "Loading models…" : "Select model";
+    var makeOtherField = d.freeMake ? ''
+      + '<div class="bk-field">'
+      +   '<label class="bk-label" for="bk-make-other">Enter make <span class="bk-req">*</span></label>'
+      +   '<input class="bk-input" id="bk-make-other" type="text" placeholder="e.g. Rivian, Polestar, Freightliner" value="' + esc(s.makeOther) + '" data-action="onMakeOther" />'
+      + '</div>' : '';
+    var modelBlock = d.freeMake ? ''
+      + '<div class="bk-field">'
+      +   '<label class="bk-label" for="bk-model-other">Enter model <span class="bk-req">*</span></label>'
+      +   '<input class="bk-input" id="bk-model-other" type="text" placeholder="e.g. R1T, Model X, Sprinter" value="' + esc(s.modelOther) + '" data-action="onModelOther" />'
+      + '</div>' : ''
+      + '<div class="bk-field" style="opacity:' + (s.make && !s.makesLoading ? 1 : .45) + '">'
+      +   '<label class="bk-label" for="bk-model">Model <span class="bk-req">*</span></label>'
+      +   '<select class="bk-select" id="bk-model" data-action="onModel"' + (s.make && !s.makesLoading && !s.modelsLoading ? '' : ' disabled') + '>' + optionsHTML(d.models, s.model, modelPh) + '</select>'
+      + '</div>'
+      + (d.freeModel && !d.freeMake ? ''
+      +   '<div class="bk-field">'
+      +     '<label class="bk-label" for="bk-model-other">Enter model <span class="bk-req">*</span></label>'
+      +     '<input class="bk-input" id="bk-model-other" type="text" placeholder="Type your model name" value="' + esc(s.modelOther) + '" data-action="onModelOther" />'
+      +   '</div>' : '');
+    return ''
+      + '<section class="bk-sec" data-label="Step 1 — Vehicle">'
+      +   '<span class="bk-kicker"><span class="bk-kicker-line"></span>Step One — Your Vehicle</span>'
+      +   '<h1 class="bk-h1">Tell us about your vehicle</h1>'
+      +   '<p class="bk-lead">Search by year, make, and model — every car, truck, and SUV sold in the U.S. is in our database.</p>'
+      +   '<div class="bk-field">'
+      +     '<label class="bk-label" for="bk-year">Year <span class="bk-req">*</span></label>'
+      +     '<select class="bk-select" id="bk-year" data-action="onYear">' + optionsHTML(d.years, s.year, "Select year") + '</select>'
+      +   '</div>'
+      +   '<div class="bk-field" style="opacity:' + (s.year ? 1 : .45) + '">'
+      +     '<label class="bk-label" for="bk-make">Make <span class="bk-req">*</span></label>'
+      +     '<select class="bk-select" id="bk-make" data-action="onMake"' + (s.year && !s.makesLoading ? '' : ' disabled') + '>' + optionsHTML(d.makes, s.make, makePh) + '</select>'
+      +   '</div>'
+      +   makeOtherField
+      +   modelBlock
+      +   '<div class="bk-field" style="opacity:' + (d.styleReady ? 1 : .45) + '">'
+      +     '<label class="bk-label" for="bk-style">Body style <span class="bk-req">*</span></label>'
+      +     '<select class="bk-select" id="bk-style" data-action="onStyle"' + (d.styleReady ? '' : ' disabled') + '>' + optionsHTML(d.stylesList, s.style, "Select body style") + '</select>'
+      +   '</div>'
+      +   '<p class="bk-hint">Can\'t find your vehicle? Choose <strong>Other (not listed)</strong> and type it in. We confirm everything by text before your appointment.</p>'
+      +   '<div class="bk-actions end">'
+      +     '<button type="button" class="bk-btn' + (d.v1 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="goNext1"' + (d.v1 ? '' : ' disabled') + '>Continue ' + ARROW + '</button>'
+      +   '</div>'
+      + '</section>';
+  }
+
+  function step2(d){
+    var s = state;
+    var followWs = d.isWs ? ''
+      + '<div style="animation:bkStepIn .45s var(--e) both">'
+      +   '<h2 class="bk-h2">What\'s your windshield damage?</h2>'
+      +   '<div class="bk-cardrow">'
+      +     '<button type="button" class="bk-opt bk-damage-card' + on(s.damage === "replace") + '" data-action="dRep">'
+      +       '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="g-ic"><path d="M4 8C7 6 17 6 20 8L21 14C21.2 15 20.4 15.8 19.4 15.6 17 15.1 14.6 14.9 12 14.9 9.4 14.9 7 15.1 4.6 15.6 3.6 15.8 2.8 15 3 14L4 8Z"></path><path d="M6.5 9.5 L10 11.5 L9 13.2 L13.5 14.2"></path><path d="M10 11.5 L12.5 9.8"></path></svg>'
+      +       '<span class="bk-damage-title">My damage is larger than six inches.</span>'
+      +       '<span class="bk-damage-tag">Replace my windshield</span>'
+      +     '</button>'
+      +     '<button type="button" class="bk-opt bk-damage-card' + on(s.damage === "repair") + '" data-action="dFix">'
+      +       '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="g-ic"><path d="M4 8C7 6 17 6 20 8L21 14C21.2 15 20.4 15.8 19.4 15.6 17 15.1 14.6 14.9 12 14.9 9.4 14.9 7 15.1 4.6 15.6 3.6 15.8 2.8 15 3 14L4 8Z"></path><circle cx="8.5" cy="10.5" r="0.6" class="g-dot"></circle><circle cx="12.5" cy="9.4" r="0.6" class="g-dot"></circle><circle cx="15.8" cy="11.6" r="0.6" class="g-dot"></circle></svg>'
+      +       '<span class="bk-damage-title">I have three or fewer chips smaller than six inches.</span>'
+      +       '<span class="bk-damage-tag">Repair my windshield</span>'
+      +     '</button>'
+      +   '</div>'
+      + '</div>' : '';
+
+    var followSide = d.isSide ? ''
+      + '<div style="animation:bkStepIn .45s var(--e) both">'
+      +   '<h2 class="bk-h2">Which side is your damage on?</h2>'
+      +   '<div class="bk-cardrow">'
+      +     '<button type="button" class="bk-opt bk-side-card' + on(s.damage === "driver") + '" data-action="dDrv">' + svgSide(false) + '<span class="bk-opt-label">Driver side</span></button>'
+      +     '<button type="button" class="bk-opt bk-side-card' + on(s.damage === "passenger") + '" data-action="dPas">' + svgSide(true) + '<span class="bk-opt-label">Passenger side</span></button>'
+      +   '</div>'
+      + '</div>' : '';
+
+    var rearNote = d.isRear ? ''
+      + '<div class="bk-note">' + SHIELD + '<p><b>Back glass includes full cleanup.</b>We vacuum every shard from your trunk and cabin, and defroster lines come standard.</p></div>' : '';
+
+    return ''
+      + '<section class="bk-sec" data-label="Step 2 — Damage">'
+      +   '<span class="bk-kicker"><span class="bk-kicker-line"></span>Step Two — The Damage</span>'
+      +   '<h1 class="bk-h1">What do you need fixed?</h1>'
+      +   '<p class="bk-lead">Tap the glass that\'s damaged on your ' + esc(d.vehShort) + '.</p>'
+      +   '<div class="bk-cardrow">'
+      +     '<button type="button" class="bk-opt bk-glass-card' + on(d.isWs) + '" data-action="pickWs">' + (d.isWs ? CHECKBADGE : '') + svgWs() + '<span class="bk-opt-label">Windshield</span></button>'
+      +     '<button type="button" class="bk-opt bk-glass-card' + on(d.isSide) + '" data-action="pickSide">' + (d.isSide ? CHECKBADGE : '') + svgSide(false) + '<span class="bk-opt-label">Side window</span></button>'
+      +     '<button type="button" class="bk-opt bk-glass-card' + on(d.isRear) + '" data-action="pickRear">' + (d.isRear ? CHECKBADGE : '') + svgRear() + '<span class="bk-opt-label">Rear window</span></button>'
+      +   '</div>'
+      +   followWs + followSide + rearNote
+      +   '<div class="bk-actions">'
+      +     '<button type="button" class="bk-ghost" data-action="goBack">' + BACK + ' Back</button>'
+      +     '<button type="button" class="bk-btn' + (d.v2 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="goNext2"' + (d.v2 ? '' : ' disabled') + '>Continue ' + ARROW + '</button>'
+      +   '</div>'
+      + '</section>';
+  }
+
+  function insListHTML(d){
+    var h = '';
+    for (var i = 0; i < d.filtered.length; i++){
+      var n = d.filtered[i];
+      h += '<button type="button" class="bk-opt bk-ins-chip' + on(state.insurer === n) + '" data-action="pickIns" data-ins="' + esc(n) + '">'
+        + '<span class="bk-ins-mono">' + esc(n.charAt(0)) + '</span>'
+        + '<span class="bk-ins-name">' + esc(n) + '</span></button>';
+    }
+    var wrap = '<div class="bk-ins-list">' + h + '</div>';
+    if (d.noIns) wrap += '<p class="bk-noins">No match — but we work with nearly everyone. Pick "Pay on my own" below or <a href="tel:+18138385104">call us</a> and we\'ll sort it out.</p>';
+    return wrap;
+  }
+
+  function step3(d){
+    var s = state;
+    var covNote = d.v3 ? '<div class="bk-note" style="margin-top:20px">' + SHIELD + '<p><b>' + esc(d.covTitle) + '</b>' + esc(d.covBody) + '</p></div>' : '';
+    return ''
+      + '<section class="bk-sec" data-label="Step 3 — Coverage">'
+      +   '<div style="display:flex;align-items:center;gap:14px;margin:0 0 18px">'
+      +     '<span style="width:44px;height:44px;border-radius:50%;background:rgba(0,180,216,.12);border:1px solid rgba(0,180,216,.4);display:grid;place-items:center;animation:bkPop .5s both;box-shadow:0 0 30px -8px rgba(0,180,216,.5)"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#48CAE4" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"></path></svg></span>'
+      +     '<span style="font-family:\'Montserrat\',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#00B4D8">Step Three — Coverage</span>'
+      +   '</div>'
+      +   '<h1 class="bk-h1">We\'ve got your <em>' + esc(d.vehLabel) + '</em> covered.</h1>'
+      +   '<p class="bk-lead">Select your insurance and we\'ll handle the claim so you can stress less — or pay on your own with simple flat pricing.</p>'
+      +   '<label class="bk-label" for="bk-ins">Your insurance company</label>'
+      +   '<div class="bk-search">'
+      +     '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8B9094" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.8-3.8"></path></svg>'
+      +     '<input class="bk-input" id="bk-ins" type="text" placeholder="Start typing — GEICO, State Farm, Progressive…" value="' + esc(s.insQuery) + '" data-action="onInsQuery" autocomplete="off" />'
+      +   '</div>'
+      +   '<div id="bkInsWrap">' + insListHTML(d) + '</div>'
+      +   '<div class="bk-or"><span class="line"></span><span class="txt">or</span><span class="line"></span></div>'
+      +   '<button type="button" class="bk-opt bk-pay' + on(s.payOwn) + '" data-action="pickPay">'
+      +     '<span class="bk-pay-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"></rect><path d="M3 10h18"></path><path d="M7 15h4"></path></svg></span>'
+      +     '<span style="flex:1"><span class="bk-pay-title">Pay on my own</span><span class="bk-pay-desc">Upfront flat pricing. No claims, no paperwork, no surprises.</span></span>'
+      +     '<span class="bk-radio">' + (s.payOwn ? '<span class="bk-radio-dot"></span>' : '') + '</span>'
+      +   '</button>'
+      +   covNote
+      +   '<div class="bk-actions">'
+      +     '<button type="button" class="bk-ghost" data-action="goBack">' + BACK + ' Back</button>'
+      +     '<button type="button" class="bk-btn' + (d.v3 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="goNext3"' + (d.v3 ? '' : ' disabled') + '>Continue to scheduling ' + ARROW + '</button>'
+      +   '</div>'
+      + '</section>';
+  }
+
+  function step4(d){
+    var s = state;
+    var days = '';
+    for (var i = 0; i < d.dates.length; i++){
+      var dt = d.dates[i];
+      days += '<button type="button" class="bk-opt bk-date-card' + on(s.dateIdx === i) + '" data-action="pickDate" data-idx="' + i + '">'
+        + '<span class="bk-date-dow">' + esc(dt.dow) + '</span>'
+        + '<span class="bk-date-day">' + esc(dt.day) + '</span>'
+        + '<span class="bk-date-mon">' + esc(dt.mon) + '</span></button>';
+    }
+    var times = '';
+    for (var j = 0; j < TIMES.length; j++){
+      var t = TIMES[j];
+      times += '<button type="button" class="bk-opt bk-time-chip' + on(s.time === t) + '" data-action="pickTime" data-time="' + esc(t) + '">'
+        + '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"></circle><path d="M12 7.5V12l3.2 2"></path></svg>'
+        + esc(t) + '</button>';
+    }
+    var cityOpts = '';
+    for (var k = 0; k < CITIES.length; k++){
+      cityOpts += '<option value="' + esc(CITIES[k]) + '"' + (CITIES[k] === s.city ? ' selected' : '') + '>' + esc(CITIES[k]) + '</option>';
+    }
+    return ''
+      + '<section class="bk-sec" data-label="Step 4 — Schedule">'
+      +   '<span class="bk-kicker"><span class="bk-kicker-line"></span>Step Four — Scheduling</span>'
+      +   '<h1 class="bk-h1">When should we come to you?</h1>'
+      +   '<p class="bk-lead">Pick a window that works — your tech texts you 30 minutes before arrival.</p>'
+      +   '<h2 class="bk-sub">Pick a day</h2>'
+      +   '<div class="bk-days">' + days + '</div>'
+      +   '<h2 class="bk-sub" style="margin:22px 0 10px">Pick a window</h2>'
+      +   '<div class="bk-times">' + times + '</div>'
+      +   '<h2 class="bk-sub" style="margin:26px 0 10px">Where should we meet you?</h2>'
+      +   '<div class="bk-row">'
+      +     '<input class="bk-input" type="text" placeholder="Street address — home, office, anywhere" value="' + esc(s.address) + '" data-action="onAddress" aria-label="Street address" style="flex:2 1 240px" />'
+      +     '<select class="bk-select" data-action="onCity" aria-label="City" style="flex:1 1 160px">' + cityOpts + '</select>'
+      +   '</div>'
+      +   '<h2 class="bk-sub" style="margin:26px 0 10px">Your contact info</h2>'
+      +   '<div class="bk-row">'
+      +     '<input class="bk-input" type="text" placeholder="Full name" value="' + esc(s.name) + '" data-action="onName" aria-label="Full name" style="flex:1 1 200px" />'
+      +     '<input class="bk-input" type="tel" placeholder="Phone" value="' + esc(s.phone) + '" data-action="onPhone" aria-label="Phone" style="flex:1 1 160px" />'
+      +     '<input class="bk-input" type="email" placeholder="Email (optional — for your receipt)" value="' + esc(s.email) + '" data-action="onEmail" aria-label="Email" style="flex:1 1 100%" />'
+      +   '</div>'
+      +   '<div class="bk-actions" style="align-items:center">'
+      +     '<button type="button" class="bk-ghost" data-action="goBack">' + BACK + ' Back</button>'
+      +     '<button type="button" class="bk-btn bk-btn-lg' + (d.v4 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="book"' + (d.v4 ? '' : ' disabled') + '>Book my appointment ' + ARROW + '</button>'
+      +   '</div>'
+      +   '<p class="bk-fineprint">No payment due today · Free cancellation up to 2 hours before</p>'
+      + '</section>';
+  }
+
+  function step5(d){
+    var rows = '';
+    for (var i = 0; i < d.confirmRows.length; i++){
+      var r = d.confirmRows[i];
+      rows += '<div class="bk-conf-row"><span class="k">' + esc(r.label) + '</span><span class="v">' + esc(r.value) + '</span></div>';
+    }
+    return ''
+      + '<section class="bk-conf" data-label="Confirmation">'
+      +   '<span class="bk-conf-check"><svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#48CAE4" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12.5l5 5L19.5 7"></path></svg></span>'
+      +   '<h1 class="bk-conf-h1">' + esc(d.confTitle) + '</h1>'
+      +   '<p class="bk-conf-sub">' + esc(d.confSub) + '</p>'
+      +   '<div class="bk-conf-card">'
+      +     '<h2 class="bk-conf-eyebrow">Your appointment</h2>'
+      +     rows
+      +     '<h2 class="bk-conf-eyebrow" style="margin:22px 0 14px">What happens next</h2>'
+      +     '<div class="bk-steps">'
+      +       '<div class="bk-step-item"><span class="bk-step-num">1</span><p><b>We confirm by text.</b> Glass is ordered for your exact vehicle and VIN-matched before we roll out.</p></div>'
+      +       '<div class="bk-step-item"><span class="bk-step-num">2</span><p><b>Your tech texts en route.</b> Most installs take about 60 minutes in your driveway.</p></div>'
+      +       '<div class="bk-step-item"><span class="bk-step-num">3</span><p><b>Drive in about an hour.</b> Lifetime workmanship warranty, crystal clear. Every time.</p></div>'
+      +     '</div>'
+      +   '</div>'
+      +   '<div class="bk-conf-actions">'
+      +     '<a class="bk-ghost" href="/">Back to site</a>'
+      +     '<a class="bk-btn" href="tel:+18138385104"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l1.6 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.6V18a2 2 0 0 1-2.2 2A14.5 14.5 0 0 1 3 6.2 2 2 0 0 1 5 4Z"></path></svg> (813) 838-5104</a>'
+      +   '</div>'
+      + '</section>';
+  }
+
+  /* =================== RAIL =================== */
+  function diagramHTML(d){
+    var s = state;
+    var svg;
+    if (d.isSide){
+      svg = '<svg viewBox="0 0 84 48" width="190" height="108" fill="none" stroke="' + (s.glass ? '#48CAE4' : '#7c8286') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform:' + (s.damage === "passenger" ? 'scaleX(-1)' : 'none') + '">'
+        + '<path d="M6 36 V30 C6 26 9 24 14 23 L23 12 C25 9.5 28 8 32 8 H48 C54 8 59 10.5 63 15 L68 21 C74 22 78 25 78 29 V36"></path>'
+        + '<path d="M6 36 H15 M33 36 H51 M69 36 H78"></path>'
+        + '<circle cx="24" cy="37" r="7"></circle><circle cx="60" cy="37" r="7"></circle>'
+        + '<path fill="' + (s.glass ? 'rgba(0,180,216,.4)' : 'rgba(255,255,255,.05)') + '" d="M33 12 L45 12 L45 22 L27 22 Z"></path>'
+        + '<path d="M49 12 H55 C58 12 61 14 63 17 L66 22 H49 Z"></path></svg>';
+    } else if (d.isRear){
+      svg = '<svg viewBox="0 0 48 64" width="96" height="128" fill="none" stroke="' + (s.glass ? '#48CAE4' : '#7c8286') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        + '<rect x="9" y="4" width="30" height="56" rx="13"></rect>'
+        + '<path d="M9 20 H4 M39 20 H44"></path>'
+        + '<path d="M15 19 C19 15 29 15 33 19"></path>'
+        + '<path fill="' + (s.glass ? 'rgba(0,180,216,.4)' : 'rgba(255,255,255,.05)') + '" d="M14 46 C19 51 29 51 34 46 C34 50 32 53 29 54.5 C26 56 22 56 19 54.5 C16 53 14 50 14 46 Z"></path></svg>';
+    } else {
+      svg = '<svg viewBox="0 0 72 56" width="170" height="132" fill="none" stroke="' + (s.glass ? '#48CAE4' : '#7c8286') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+        + '<path d="M18 27 C20 12 52 12 54 27"></path>'
+        + '<path fill="' + (s.glass ? 'rgba(0,180,216,.4)' : 'rgba(255,255,255,.05)') + '" d="M21 26 C23 15 49 15 51 26 C41 24 31 24 21 26 Z"></path>'
+        + '<rect x="10" y="27" width="52" height="17" rx="6"></rect>'
+        + '<rect x="16" y="32" width="10" height="4" rx="2"></rect>'
+        + '<rect x="46" y="32" width="10" height="4" rx="2"></rect>'
+        + '<path d="M16 44 a5 5 0 0 0 10 0 M46 44 a5 5 0 0 0 10 0"></path></svg>';
+    }
+    return '<div class="bk-diagram"><span class="shine"></span>' + svg + '<span class="cap">' + esc(d.diagCaption) + '</span></div>';
+  }
+
+  function renderRail(d){
+    if (state.step >= 5){ rail.style.display = "none"; return; }
+    rail.style.display = "";
+    var rows = "";
+    if (d.summaryRows.length === 0){
+      rows = '<p class="bk-rail-empty">Your selections will appear here as you go.</p>';
+    } else {
+      for (var i = 0; i < d.summaryRows.length; i++){
+        var r = d.summaryRows[i];
+        rows += '<div class="bk-rail-row"><span class="k">' + esc(r.label) + '</span><span class="v">' + esc(r.value) + '</span></div>';
+      }
+    }
+    rail.innerHTML = ''
+      + '<h2 class="bk-rail-title">Your service</h2>'
+      + diagramHTML(d)
+      + rows
+      + '<div class="bk-rail-badges">'
+      +   '<span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"></path></svg> Lifetime workmanship warranty</span>'
+      +   '<span><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#00B4D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"></path></svg> OEM-quality glass, we come to you</span>'
+      + '</div>';
+  }
+
+  /* =================== RENDER ORCHESTRATION =================== */
+  function renderChrome(d){
+    pill.textContent = "STEP " + Math.min(state.step, 4) + " OF 4";
+    pill.style.display = state.step < 5 ? "" : "none";
+    bar.style.width = d.pct;
+  }
+  function renderStep(d){
+    var html = "";
+    if (state.step === 1) html = step1(d);
+    else if (state.step === 2) html = step2(d);
+    else if (state.step === 3) html = step3(d);
+    else if (state.step === 4) html = step4(d);
+    else html = step5(d);
+    content.innerHTML = html;
+  }
+  function render(){
+    var d = derive();
+    renderChrome(d);
+    renderStep(d);
+    renderRail(d);
+  }
+  function renderStepAndRail(){
+    var d = derive();
+    renderStep(d);
+    renderRail(d);
+  }
+  function go(n){
+    set({ step: n });
+    render();
+    try { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); } catch (e) { window.scrollTo(0, 0); }
+  }
+  function refreshPrimary(){
+    var btn = document.getElementById("bkPrimary");
+    if (!btn) return;
+    var d = derive();
+    var ok = state.step === 4 ? d.v4 : (state.step === 3 ? d.v3 : (state.step === 2 ? d.v2 : d.v1));
+    btn.disabled = !ok;
+    if (ok) btn.classList.remove("is-disabled"); else btn.classList.add("is-disabled");
+  }
+
+  /* =================== EVENT DELEGATION =================== */
+  content.addEventListener("click", function(e){
+    var el = e.target.closest("[data-action]");
+    if (!el) return;
+    var action = el.getAttribute("data-action");
+    var d = derive();
+    switch (action){
+      case "goBack": go(Math.max(1, state.step - 1)); break;
+      case "goNext1": if (d.v1) go(2); break;
+      case "goNext2": if (d.v2) go(3); break;
+      case "goNext3": if (d.v3) go(4); break;
+      case "book": if (d.v4) go(5); break;
+      case "pickWs": set({ glass: "windshield", damage: "" }); renderStepAndRail(); break;
+      case "pickSide": set({ glass: "side", damage: "" }); renderStepAndRail(); break;
+      case "pickRear": set({ glass: "rear", damage: "replace" }); renderStepAndRail(); break;
+      case "dRep": set({ damage: "replace" }); renderStepAndRail(); break;
+      case "dFix": set({ damage: "repair" }); renderStepAndRail(); break;
+      case "dDrv": set({ damage: "driver" }); renderStepAndRail(); break;
+      case "dPas": set({ damage: "passenger" }); renderStepAndRail(); break;
+      case "pickIns": set({ insurer: el.getAttribute("data-ins"), payOwn: false }); renderStepAndRail(); break;
+      case "pickPay": set({ payOwn: true, insurer: "" }); renderStepAndRail(); break;
+      case "pickDate": set({ dateIdx: parseInt(el.getAttribute("data-idx"), 10) }); renderStepAndRail(); break;
+      case "pickTime": set({ time: el.getAttribute("data-time") }); renderStepAndRail(); break;
+    }
+  });
+
+  content.addEventListener("change", function(e){
+    var el = e.target.closest("[data-action]");
+    if (!el) return;
+    var action = el.getAttribute("data-action");
+    var val = el.value;
+    switch (action){
+      case "onYear":
+        set({ year: val, make: "", model: "", style: "", makeOther: "", modelOther: "", modelsList: [] });
+        if (val) loadMakesIntoState();
+        else set({ makesList: [] });
+        renderStepAndRail();
+        break;
+      case "onMake":
+        set({ make: val, model: "", style: "", modelOther: "", modelsList: [] });
+        if (val === MAKE_OTHER) renderStepAndRail();
+        else if (val && state.year) loadModelsIntoState(val, state.year);
+        else renderStepAndRail();
+        break;
+      case "onModel":
+        set({ model: val, style: "", modelOther: val === MODEL_OTHER ? state.modelOther : "" });
+        renderStepAndRail();
+        break;
+      case "onStyle": set({ style: val }); renderStepAndRail(); break;
+      case "onCity": set({ city: val }); renderRail(derive()); break;
+    }
+  });
+
+  content.addEventListener("input", function(e){
+    var el = e.target.closest("[data-action]");
+    if (!el) return;
+    var action = el.getAttribute("data-action");
+    switch (action){
+      case "onInsQuery":
+        set({ insQuery: el.value });
+        var wrap = document.getElementById("bkInsWrap");
+        if (wrap) wrap.innerHTML = insListHTML(derive());
+        break;
+      case "onAddress":
+        set({ address: el.value }); renderRail(derive()); refreshPrimary(); break;
+      case "onName":
+        set({ name: el.value }); renderRail(derive()); refreshPrimary(); break;
+      case "onPhone":
+        el.value = fmtPhone(el.value); set({ phone: el.value }); renderRail(derive()); refreshPrimary(); break;
+      case "onEmail":
+        set({ email: el.value }); break;
+      case "onMakeOther":
+        set({ makeOther: el.value }); renderStepAndRail(); refreshPrimary(); break;
+      case "onModelOther":
+        set({ modelOther: el.value }); renderStepAndRail(); refreshPrimary(); break;
+    }
+  });
+
+  /* =================== INIT =================== */
+  render();
+})();
+</script>
+</body>
+</html>
