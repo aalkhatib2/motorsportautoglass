@@ -127,15 +127,23 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
+}
+/* ambient gradients: own fixed GPU layer instead of background-attachment:fixed,
+   which forces a full-page re-raster on every scroll frame (trackpad jank on retina) */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-color:var(--bg);
   background-image:
     radial-gradient(1100px 620px at 84% -8%, rgba(0,180,216,0.16), transparent 60%),
     radial-gradient(880px 520px at -12% 14%, rgba(0,180,216,0.09), transparent 55%),
     radial-gradient(900px 700px at 50% 116%, rgba(0,150,199,0.10), transparent 60%);
-  background-attachment:fixed;
+  transform:translateZ(0);
 }
-/* subtle film grain for premium depth */
+/* subtle film grain for premium depth (translateZ promotes it to its own
+   compositor layer so the blend mode doesn't re-rasterize on scroll) */
 body::after{
   content:"";position:fixed;inset:0;z-index:1;pointer-events:none;
+  transform:translateZ(0);
   opacity:.035;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
