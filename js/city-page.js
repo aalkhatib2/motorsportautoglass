@@ -64,6 +64,19 @@
     if (ogTitle) ogTitle.setAttribute("content", cfg.metaTitle);
     var ogDesc = document.querySelector('meta[property="og:description"]');
     if (ogDesc) ogDesc.setAttribute("content", cfg.metaDescription);
+    var twTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twTitle) twTitle.setAttribute("content", cfg.metaTitle);
+    var twDesc = document.querySelector('meta[name="twitter:description"]');
+    if (twDesc) twDesc.setAttribute("content", cfg.metaDescription);
+
+    // Canonical + og:url: each city self-canonicalizes to its own path so the
+    // near-duplicate city pages don't compete as duplicate content.
+    var ORIGIN = "https://motorsportautoglass.com";
+    var canonicalPath = isHome ? "/" : "/" + slug + "/";
+    var canonical = document.getElementById("canonicalLink");
+    if (canonical) canonical.setAttribute("href", ORIGIN + canonicalPath);
+    var ogUrl = document.getElementById("ogUrl");
+    if (ogUrl) ogUrl.setAttribute("content", ORIGIN + canonicalPath);
 
     // JSON-LD: on a city page, localize the description to that city/state.
     // On the homepage we leave the static generic dual-state schema in place.

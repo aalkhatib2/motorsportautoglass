@@ -5,7 +5,6 @@
     <div class="hero-skyline" role="img" aria-hidden="true" style="background-image:url('<?php echo esc_url( get_template_directory_uri() . '/assets/cities/tampa-night.jpg' ); ?>');left:-13px;top:10px;position:absolute;"></div>
     <div class="hero-ring" aria-hidden="true"></div>
     <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero-sweep" aria-hidden="true"></div>
     <div class="container">
       <span class="status animate a1"><span class="dot"></span><span>NOW BOOKING</span></span>
       <p class="tagline animate a2">Crystal Clear. Every Time.</p>

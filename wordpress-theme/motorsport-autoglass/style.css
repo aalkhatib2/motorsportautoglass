@@ -247,13 +247,6 @@ h1,h2,h3{font-family:"Montserrat",sans-serif;margin:0;line-height:1.08;letter-sp
   mask-image:linear-gradient(to top,#000,transparent);
   transform:perspective(380px) rotateX(60deg);transform-origin:bottom;
 }
-/* light sweep, like reflection across glass */
-.hero-sweep{
-  position:absolute;left:-40%;right:-40%;top:var(--nav-h);bottom:0;z-index:1;pointer-events:none;
-  background:linear-gradient(105deg,transparent 38%,rgba(144,224,239,.07) 48%,rgba(255,255,255,.05) 50%,transparent 62%);
-  animation:sweep 9s var(--ease) infinite;
-}
-@keyframes sweep{0%{transform:translateX(-30%)}55%,100%{transform:translateX(30%)}}
 .hero .container{position:relative;z-index:3}
 
 .status{
@@ -359,20 +352,10 @@ h1,h2,h3{font-family:"Montserrat",sans-serif;margin:0;line-height:1.08;letter-sp
   font-family:"Montserrat",sans-serif;font-weight:700;font-size:clamp(.95rem,1.6vw,1.15rem);
   letter-spacing:.06em;text-transform:uppercase;color:#3a3f44;margin:0;
 }
-.insurance-marquee{
-  overflow:hidden;
-  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
-  mask-image:linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
-}
+.insurance-marquee{padding-inline:4vw}
 .insurance-marquee-track{
-  display:flex;align-items:center;gap:clamp(36px,5vw,64px);width:max-content;
-  animation:insurance-scroll 42s linear infinite;
-  will-change:transform;
-}
-.insurance-marquee:hover .insurance-marquee-track{animation-play-state:paused}
-@keyframes insurance-scroll{
-  0%{transform:translateX(0)}
-  100%{transform:translateX(-50%)}
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
+  gap:clamp(20px,3.5vw,44px);max-width:1100px;margin:0 auto;
 }
 .insurance-logo{
   flex:0 0 auto;width:clamp(140px,14vw,180px);height:72px;
@@ -701,6 +684,4 @@ select.input option{background:#1d1d1d;color:#fff}
   *{animation:none !important;transition-duration:.01ms !important;scroll-behavior:auto !important}
   .reveal{opacity:1 !important;transform:none !important}
   .animate{opacity:1 !important;animation:none !important}
-  .hero-sweep{display:none}
-  .insurance-marquee-track{animation:none}
 }
