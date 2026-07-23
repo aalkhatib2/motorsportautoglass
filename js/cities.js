@@ -153,8 +153,9 @@ window.CITY_PAGES = {
    * markets) because the actual Arizona service-area list wasn't provided.
    * CONFIRM / RENAME / TRIM before going live — each is a self-contained
    * block, so editing "name"/"slug" + copy is a quick change. If you
-   * remove or rename a slug, also update /_redirects and the matching
-   * /<slug>/ directory, plus the Service Area + footer chips in index.html.
+   * remove or rename a slug, also update the matching /<slug>/ directory
+   * (regenerate via scripts/build-city-pages.js), plus the Service Area +
+   * footer chips in index.html.
    *
    * Phone stays (813) 838-5104 per business; badges assert AZ licensing.
    * ===================================================================== */
