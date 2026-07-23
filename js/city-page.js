@@ -32,6 +32,23 @@
     if (el && html != null) el.innerHTML = html;
   }
 
+  // Distinct city skyline photos, derived from CITY_PAGES so the pool stays in
+  // sync automatically if an image is added or changed. Brandon/Wesley Chapel
+  // reuse Tampa's photo, so those collapse to one entry.
+  function randomHomeSkyline() {
+    var seen = {};
+    var pool = [];
+    (window.CITY_SLUGS || []).forEach(function (slug) {
+      var c = window.CITY_PAGES[slug];
+      if (c && c.heroImage && !seen[c.heroImage]) {
+        seen[c.heroImage] = 1;
+        pool.push(c.heroImage);
+      }
+    });
+    if (!pool.length) return null;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
   function applyCityPage() {
     // The bare homepage ("/") renders neutral dual-state content instead of
     // being forced to a single city. An explicit ?city= override still wins.
@@ -111,9 +128,22 @@
     setText("[data-city='footer-badge']", cfg.footerBadge);
 
     var skyline = document.getElementById("heroSkyline");
-    if (skyline && cfg.heroImage) {
-      skyline.style.backgroundImage = 'url("' + cfg.heroImage + '")';
-      skyline.setAttribute("aria-label", cfg.heroImageAlt || (cfg.name ? cfg.name + " skyline" : "City skyline"));
+    if (skyline) {
+      // On the neutral homepage, cycle through the city photos — one random pick
+      // per page load. City pages keep their own fixed skyline for local SEO.
+      var heroImage = cfg.heroImage;
+      var heroImageAlt = cfg.heroImageAlt;
+      if (isHome) {
+        var pick = randomHomeSkyline();
+        if (pick) {
+          heroImage = pick;
+          heroImageAlt = "City skyline at night";
+        }
+      }
+      if (heroImage) {
+        skyline.style.backgroundImage = 'url("' + heroImage + '")';
+        skyline.setAttribute("aria-label", heroImageAlt || (cfg.name ? cfg.name + " skyline" : "City skyline"));
+      }
     }
 
     var grid = document.getElementById("servicesGrid");

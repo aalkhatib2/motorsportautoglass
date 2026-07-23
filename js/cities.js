@@ -49,8 +49,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile auto glass & windshield replacement serving St. Petersburg and Pinellas County.",
     footerBadge: "Licensed & Insured · St. Petersburg, FL",
     featuredService: "windshield",
-    heroImage: "/assets/cities/tampa-night.jpg",
-    heroImageAlt: "Tampa Bay area skyline at night",
+    heroImage: "/assets/cities/st-petersburg-night.jpg",
+    heroImageAlt: "St. Petersburg pier and skyline at night",
     metaTitle: "Motorsport Autoglass — St. Petersburg Mobile Auto Glass",
     metaDescription:
       "Mobile windshield replacement & auto glass repair in St. Petersburg, FL. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",
@@ -78,8 +78,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile windshield replacement serving Clearwater and the Gulf beaches.",
     footerBadge: "Licensed & Insured · Clearwater, FL",
     featuredService: "windshield",
-    heroImage: "/assets/cities/tampa-night.jpg",
-    heroImageAlt: "Tampa Bay area skyline at night",
+    heroImage: "/assets/cities/clearwater-night.jpg",
+    heroImageAlt: "Clearwater skyline at night",
     metaTitle: "Motorsport Autoglass — Clearwater Mobile Windshield Replacement",
     metaDescription:
       "Mobile windshield replacement in Clearwater, FL. Same-day service at your home, hotel, or workplace. Insurance accepted. Call (813) 838-5104.",
@@ -156,8 +156,6 @@ window.CITY_PAGES = {
    * remove or rename a slug, also update /_redirects and the matching
    * /<slug>/ directory, plus the Service Area + footer chips in index.html.
    *
-   * heroImage currently reuses the Tampa night photo as a PLACEHOLDER —
-   * swap each to real Arizona photography in /assets/cities/ when ready.
    * Phone stays (813) 838-5104 per business; badges assert AZ licensing.
    * ===================================================================== */
   phoenix: {
@@ -180,8 +178,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile auto glass & windshield replacement serving Phoenix and the Valley.",
     footerBadge: "Licensed & Insured · Phoenix, AZ",
     featuredService: "windshield",
-    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Phoenix photography
-    heroImageAlt: "City skyline at night",
+    heroImage: "/assets/cities/phoenix-night.jpg",
+    heroImageAlt: "Phoenix skyline at night from Papago Park",
     metaTitle: "Motorsport Autoglass — Phoenix's Mobile Windshield Experts",
     metaDescription:
       "Mobile auto glass & windshield replacement in Phoenix, AZ. We come to you. Same-day service. Insurance accepted. Call (813) 838-5104 for a free quote.",
@@ -209,8 +207,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile windshield replacement & ADAS calibration serving Scottsdale.",
     footerBadge: "Licensed & Insured · Scottsdale, AZ",
     featuredService: "adas",
-    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Scottsdale photography
-    heroImageAlt: "City skyline at night",
+    heroImage: "/assets/cities/scottsdale-night.jpg",
+    heroImageAlt: "Scottsdale skyline at night",
     metaTitle: "Motorsport Autoglass — Scottsdale Mobile Windshield & ADAS",
     metaDescription:
       "Mobile windshield replacement & ADAS calibration in Scottsdale, AZ. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",
@@ -238,8 +236,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile auto glass serving Mesa and the East Valley.",
     footerBadge: "Licensed & Insured · Mesa, AZ",
     featuredService: "back-glass",
-    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Mesa photography
-    heroImageAlt: "City skyline at night",
+    heroImage: "/assets/cities/mesa-night.jpg",
+    heroImageAlt: "Mesa skyline at night",
     metaTitle: "Motorsport Autoglass — Mesa Mobile Auto Glass",
     metaDescription:
       "Mobile windshield & back glass replacement in Mesa, AZ. Same-day appointments at your home. Insurance accepted. Call (813) 838-5104.",
@@ -267,8 +265,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile windshield replacement serving Tempe and the East Valley.",
     footerBadge: "Licensed & Insured · Tempe, AZ",
     featuredService: "windshield",
-    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Tempe photography
-    heroImageAlt: "City skyline at night",
+    heroImage: "/assets/cities/tempe-night.jpg",
+    heroImageAlt: "Tempe Town Lake skyline at night",
     metaTitle: "Motorsport Autoglass — Tempe Mobile Windshield Replacement",
     metaDescription:
       "Mobile windshield replacement in Tempe, AZ. Same-day service at your home, campus, or workplace. Insurance accepted. Call (813) 838-5104.",
@@ -296,8 +294,8 @@ window.CITY_PAGES = {
     footerTag: "Mobile auto glass & windshield replacement serving Chandler and the southeast Valley.",
     footerBadge: "Licensed & Insured · Chandler, AZ",
     featuredService: "windshield",
-    heroImage: "/assets/cities/tampa-night.jpg", // TODO: replace with Chandler photography
-    heroImageAlt: "City skyline at night",
+    heroImage: "/assets/cities/chandler-night.jpg",
+    heroImageAlt: "Chandler skyline at night",
     metaTitle: "Motorsport Autoglass — Chandler Mobile Auto Glass",
     metaDescription:
       "Mobile windshield replacement & auto glass repair in Chandler, AZ. Same-day service at your location. Insurance accepted. Call (813) 838-5104.",

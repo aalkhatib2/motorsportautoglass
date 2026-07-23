@@ -10,6 +10,10 @@
   // stay on "/", which now renders as the neutral dual-state homepage.
 
   var STORAGE_KEY = "mag_geo_redirected";
+  // Cities are ~20-30mi apart within each metro; 60mi comfortably covers both
+  // metros plus "surrounding areas" without ever winning against a genuinely
+  // out-of-area visitor (nearest real case observed: Miami is 198mi from Brandon).
+  var MAX_REDIRECT_MILES = 60;
 
   function isRootVisit() {
     var path = window.location.pathname.replace(/\/$/, "");
@@ -36,7 +40,7 @@
   }
 
   function nearestCity(lat, lng) {
-    var best = window.CITY_DEFAULT || "tampa";
+    var best = null;
     var bestDist = Infinity;
     window.CITY_SLUGS.forEach(function (slug) {
       var c = window.CITY_PAGES[slug];
@@ -46,6 +50,7 @@
         best = slug;
       }
     });
+    if (best === null || bestDist > MAX_REDIRECT_MILES) return null;
     return best;
   }
 

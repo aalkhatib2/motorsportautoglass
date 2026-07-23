@@ -52,6 +52,8 @@ input::placeholder{color:var(--dim)}
 .bk-col{flex:1 1 520px;min-width:0;max-width:660px}
 
 .bk-footer{border-top:1px solid rgba(255,255,255,.06);padding:22px 0;text-align:center;color:var(--dim);font-size:.78rem}
+.bk-footer a{color:var(--silver);transition:color .2s}
+.bk-footer a:hover{color:var(--accent-bright)}
 
 /* ---------- section headings ---------- */
 .bk-sec{animation:bkStepIn .5s var(--e) both}
@@ -143,6 +145,13 @@ input::placeholder{color:var(--dim)}
 .bk-time-chip svg{stroke:#9AA0A4;transition:stroke .25s}
 .bk-time-chip.is-on svg{stroke:var(--accent-bright)}
 .bk-fineprint{color:var(--dim);font-size:.8rem;margin:16px 0 0;text-align:right}
+/* Honeypot: off-screen rather than display:none — some bots skip hidden inputs. */
+.bk-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.bk-error{
+  margin:18px 0 0;padding:12px 15px;border-radius:10px;
+  background:rgba(255,86,86,.09);border:1px solid rgba(255,86,86,.32);
+  color:#ff9d9d;font-size:.9rem;line-height:1.5;
+}
 
 /* ---------- info note ---------- */
 .bk-note{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding:14px 16px;border-radius:12px;background:rgba(0,180,216,.07);border:1px solid rgba(0,180,216,.25);animation:bkRowIn .35s both}
@@ -209,7 +218,7 @@ input::placeholder{color:var(--dim)}
     <aside class="bk-rail" id="bkRail" data-label="Summary rail"></aside>
   </main>
 
-  <footer class="bk-footer">© 2026 Motorsport Autoglass · Licensed &amp; Insured · Tampa Bay, FL</footer>
+  <footer class="bk-footer">© 2026 Motorsport Autoglass · Licensed &amp; Insured · Tampa Bay, FL · <a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms &amp; Conditions</a></footer>
 </div>
 
 <script>
@@ -652,6 +661,11 @@ input::placeholder{color:var(--dim)}
       +     '<input class="bk-input" type="tel" placeholder="Phone" value="' + esc(s.phone) + '" data-action="onPhone" aria-label="Phone" style="flex:1 1 160px" />'
       +     '<input class="bk-input" type="email" placeholder="Email (optional — for your receipt)" value="' + esc(s.email) + '" data-action="onEmail" aria-label="Email" style="flex:1 1 100%" />'
       +   '</div>'
+      +   '<div class="bk-hp" aria-hidden="true">'
+      +     '<label for="bk-website">Website</label>'
+      +     '<input id="bk-website" name="website" type="text" tabindex="-1" autocomplete="off" />'
+      +   '</div>'
+      +   '<p class="bk-error" id="bkError" role="alert" style="display:none"></p>'
       +   '<div class="bk-actions" style="align-items:center">'
       +     '<button type="button" class="bk-ghost" data-action="goBack">' + BACK + ' Back</button>'
       +     '<button type="button" class="bk-btn bk-btn-lg' + (d.v4 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="book"' + (d.v4 ? '' : ' disabled') + '>Book my appointment ' + ARROW + '</button>'
@@ -770,6 +784,70 @@ input::placeholder{color:var(--dim)}
     render();
     try { window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" }); } catch (e) { window.scrollTo(0, 0); }
   }
+  /* Posts the booking to the serverless endpoint that texts the business.
+     The confirmation screen is gated on this resolving ok — a failed send must
+     never look like a successful booking to the customer. */
+  function submitBooking(d, btn){
+    var s = state;
+    var hp = document.getElementById("bk-website");
+    var payload = {
+      name: s.name,
+      phone: s.phone,
+      email: s.email,
+      address: s.address,
+      city: s.city,
+      vehicleYear: s.year,
+      vehicleMake: vehicleMakeLabel(s),
+      vehicleModel: vehicleModelLabel(s),
+      vehicleStyle: s.style,
+      service: d.serviceLabel,
+      coverage: d.coverageLabel,
+      appointment: d.apptLabel,
+      website: hp ? hp.value : ""
+    };
+
+    var originalLabel = btn ? btn.innerHTML : "";
+    if (btn){
+      btn.disabled = true;
+      btn.classList.add("is-disabled");
+      btn.textContent = "Booking…";
+    }
+    showBookingError("");
+
+    return fetch("/api/submit-quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(data){
+          return { ok: r.ok, data: data };
+        });
+      })
+      .then(function(res){
+        if (res.ok && res.data && res.data.ok){
+          go(5);
+          return;
+        }
+        throw new Error((res.data && res.data.error) || "We couldn't send your booking. Please try again, or call (813) 838-5104.");
+      })
+      .catch(function(err){
+        showBookingError(err && err.message ? err.message : "We couldn't send your booking. Please try again, or call (813) 838-5104.");
+        if (btn){
+          btn.disabled = false;
+          btn.classList.remove("is-disabled");
+          btn.innerHTML = originalLabel;
+        }
+      });
+  }
+
+  function showBookingError(msg){
+    var el = document.getElementById("bkError");
+    if (!el) return;
+    el.textContent = msg || "";
+    el.style.display = msg ? "" : "none";
+  }
+
   function refreshPrimary(){
     var btn = document.getElementById("bkPrimary");
     if (!btn) return;
@@ -790,7 +868,7 @@ input::placeholder{color:var(--dim)}
       case "goNext1": if (d.v1) go(2); break;
       case "goNext2": if (d.v2) go(3); break;
       case "goNext3": if (d.v3) go(4); break;
-      case "book": if (d.v4) go(5); break;
+      case "book": if (d.v4) submitBooking(d, el); break;
       case "pickWs": set({ glass: "windshield", damage: "" }); renderStepAndRail(); break;
       case "pickSide": set({ glass: "side", damage: "" }); renderStepAndRail(); break;
       case "pickRear": set({ glass: "rear", damage: "replace" }); renderStepAndRail(); break;
