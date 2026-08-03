@@ -164,6 +164,17 @@ button,input,select,textarea{font:inherit;color:inherit}
 ::selection{background:var(--accent);color:var(--ink)}
 :focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:6px}
 
+/* keyboard-only skip link: parked above the viewport until focused */
+.skip-link{
+  position:fixed;top:14px;left:14px;z-index:100;
+  padding:12px 20px;border-radius:12px;
+  background:linear-gradient(135deg,var(--accent-bright),var(--accent-deep));
+  color:var(--ink);font-family:"Montserrat",sans-serif;font-weight:700;font-size:.9rem;
+  box-shadow:0 10px 30px -12px var(--glow);
+  transform:translateY(calc(-100% - 20px));transition:transform .25s var(--ease);
+}
+.skip-link:focus{transform:none}
+
 /* thin custom scrollbar */
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:var(--bg-2)}
@@ -284,6 +295,8 @@ h1,h2,h3{font-family:"Montserrat",sans-serif;margin:0;line-height:1.08;letter-sp
   background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease);
 }
 .nav-menu a:hover::after{transform:scaleX(1)}
+.nav-menu a.is-active{color:color-mix(in srgb, var(--accent-deep) calc((1 - var(--nav-progress)) * 100%), var(--accent-bright) calc(var(--nav-progress) * 100%))}
+.nav-menu a.is-active::after{transform:scaleX(1)}
 .nav-actions{display:flex;align-items:center;gap:14px}
 .nav-phone{
   display:inline-flex;align-items:center;gap:9px;font-family:"Montserrat",sans-serif;
@@ -433,27 +446,35 @@ h1,h2,h3{font-family:"Montserrat",sans-serif;margin:0;line-height:1.08;letter-sp
   position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
   clip:rect(0,0,0,0);white-space:nowrap;border:0;
 }
-.insurance-strip{
-  position:relative;z-index:2;padding:clamp(36px,5vw,56px) 0;
-  border-top:1px solid rgba(0,0,0,.08);border-bottom:1px solid rgba(0,0,0,.08);
-  background:#fff;
+.insurance-strip{position:relative;z-index:2;padding:clamp(28px,4vw,48px) 0}
+.insurance-panel{
+  position:relative;overflow:hidden;border-radius:24px;
+  border:1px solid var(--line);
+  background:
+    radial-gradient(640px 240px at 50% -30%,rgba(0,180,216,.12),transparent 70%),
+    linear-gradient(180deg,var(--panel-2),var(--panel));
+  padding:clamp(28px,4vw,44px) clamp(20px,3.5vw,44px);
 }
-.insurance-strip-head{text-align:center;margin-bottom:clamp(24px,3.5vw,32px);padding-inline:4vw}
+.insurance-strip-head{text-align:center;margin-bottom:clamp(22px,3vw,30px)}
 .insurance-strip-title{
   font-family:"Montserrat",sans-serif;font-weight:700;font-size:clamp(.95rem,1.6vw,1.15rem);
-  letter-spacing:.06em;text-transform:uppercase;color:#3a3f44;margin:0;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--silver);margin:0;
 }
-.insurance-marquee{padding-inline:4vw}
 .insurance-marquee-track{
   display:flex;align-items:center;justify-content:center;flex-wrap:wrap;
-  gap:clamp(20px,3.5vw,44px);max-width:1100px;margin:0 auto;
+  gap:clamp(14px,2.5vw,24px);max-width:1100px;margin:0 auto;
 }
+/* logos keep a small white chip each (they're drawn for light backgrounds)
+   instead of the old full-bleed white band */
 .insurance-logo{
-  flex:0 0 auto;width:clamp(140px,14vw,180px);height:72px;
-  display:flex;align-items:center;justify-content:center;padding:12px 18px;
+  flex:0 0 auto;width:clamp(132px,13vw,172px);height:68px;
+  display:flex;align-items:center;justify-content:center;padding:14px 20px;
+  background:#fff;border-radius:14px;border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 18px 34px -22px rgba(0,0,0,.85);
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease);
 }
+.insurance-logo:hover{transform:translateY(-3px);box-shadow:0 22px 40px -22px rgba(0,0,0,.9),0 0 0 1px rgba(0,180,216,.25)}
 .insurance-logo img{width:100%;height:100%;object-fit:contain;object-position:center}
-.insurance-logo--card img{border-radius:10px}
 
 /* ============================================================
    TRUST SIGNALS
@@ -755,6 +776,7 @@ select.input option{background:#1d1d1d;color:#fff}
 }
 @media (min-width:600px){
   .services-grid{grid-template-columns:1fr 1fr}
+  .service-card--featured{grid-column:1 / -1}
   .why-grid{grid-template-columns:1fr 1fr}
   .row-3{grid-template-columns:1fr 1fr 1fr}
 }
@@ -769,7 +791,19 @@ select.input option{background:#1d1d1d;color:#fff}
   .quote-grid{grid-template-columns:0.9fr 1.1fr;gap:48px}
 }
 @media (min-width:1000px){
-  .services-grid{grid-template-columns:repeat(3,1fr)}
+  /* asymmetric split: flagship windshield card runs tall on the left,
+     the other two stack beside it */
+  .services-grid{grid-template-columns:1.5fr 1fr}
+  .service-card--featured{
+    grid-column:auto;grid-row:1 / span 2;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:38px 34px 36px;
+  }
+  .service-card--featured::before{font-size:4.4rem;top:26px;right:28px}
+  .service-card--featured .ic{width:64px;height:64px;border-radius:16px}
+  .service-card--featured .ic svg{width:32px;height:32px}
+  .service-card--featured h3{font-size:1.5rem;margin-top:24px}
+  .service-card--featured p{font-size:1.02rem;max-width:44ch}
   .why-grid{grid-template-columns:repeat(4,1fr)}
   .why-item{flex-direction:column;text-align:left}
 }
@@ -782,6 +816,8 @@ select.input option{background:#1d1d1d;color:#fff}
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#top">Skip to main content</a>
 
 <div class="progress" id="progress" aria-hidden="true"></div>
 
@@ -848,7 +884,7 @@ select.input option{background:#1d1d1d;color:#fff}
       </div>
       <div class="services-grid" id="servicesGrid">
 
-        <article class="service-card reveal" data-num="01" data-service-key="windshield">
+        <article class="service-card service-card--featured reveal" data-num="01" data-service-key="windshield">
           <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8C7 6 17 6 20 8L21 14C21.2 15 20.4 15.8 19.4 15.6 17 15.1 14.6 14.9 12 14.9 9.4 14.9 7 15.1 4.6 15.6 3.6 15.8 2.8 15 3 14L4 8Z"/><path d="M12 6.4V15"/><path d="M6 10.6C9.5 9.6 14.5 9.6 18 10.6"/></svg></span>
           <h3>Windshield Replacement</h3>
           <p>Factory-grade windshield replacement at your door. Expert install, crystal-clear visibility, done right the first time.</p>
@@ -905,17 +941,20 @@ select.input option{background:#1d1d1d;color:#fff}
 
   <!-- ===================== INSURANCE LOGO STRIP ===================== -->
   <section class="insurance-strip" aria-labelledby="insurance-strip-title">
-    <div class="insurance-strip-head">
-      <h2 class="insurance-strip-title" id="insurance-strip-title">We Accept All Major Insurance Providers</h2>
-      <p class="sr-only">We work with State Farm, GEICO, Progressive, Allstate, and USAA — and more.</p>
-    </div>
-    <div class="insurance-marquee" aria-hidden="true">
-      <div class="insurance-marquee-track">
-        <div class="insurance-logo"><img src="/assets/insurance/state-farm.svg" alt="" width="160" height="28" loading="lazy" decoding="async"></div>
-        <div class="insurance-logo"><img src="/assets/insurance/geico.png" alt="" width="120" height="40" loading="lazy" decoding="async"></div>
-        <div class="insurance-logo"><img src="/assets/insurance/progressive.png" alt="" width="140" height="40" loading="lazy" decoding="async"></div>
-        <div class="insurance-logo"><img src="/assets/insurance/allstate.png" alt="" width="100" height="56" loading="lazy" decoding="async"></div>
-        <div class="insurance-logo"><img src="/assets/insurance/usaa.png" alt="" width="80" height="56" loading="lazy" decoding="async"></div>
+    <div class="container">
+      <div class="insurance-panel reveal">
+        <div class="insurance-strip-head">
+          <h2 class="insurance-strip-title" id="insurance-strip-title">We Accept All Major Insurance Providers</h2>
+        </div>
+        <div class="insurance-marquee">
+          <div class="insurance-marquee-track">
+            <div class="insurance-logo"><img src="/assets/insurance/state-farm.svg" alt="State Farm" width="160" height="28" loading="lazy" decoding="async"></div>
+            <div class="insurance-logo"><img src="/assets/insurance/geico.png" alt="GEICO" width="120" height="40" loading="lazy" decoding="async"></div>
+            <div class="insurance-logo"><img src="/assets/insurance/progressive.png" alt="Progressive" width="140" height="40" loading="lazy" decoding="async"></div>
+            <div class="insurance-logo"><img src="/assets/insurance/allstate.png" alt="Allstate" width="100" height="56" loading="lazy" decoding="async"></div>
+            <div class="insurance-logo"><img src="/assets/insurance/usaa.png" alt="USAA" width="80" height="56" loading="lazy" decoding="async"></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1205,6 +1244,9 @@ select.input option{background:#1d1d1d;color:#fff}
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l1.6 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.6V18a2 2 0 0 1-2.2 2A14.5 14.5 0 0 1 3 6.2 2 2 0 0 1 5 4Z"/></svg>
 </a>
 
+<!-- GSAP self-hosted: the CSP only allows script-src 'self', so no CDN -->
+<script src="/js/vendor/gsap.min.js"></script>
+<script src="/js/vendor/ScrollTrigger.min.js"></script>
 <script>
 (function(){
   "use strict";
@@ -1221,6 +1263,11 @@ select.input option{background:#1d1d1d;color:#fff}
   var ticking = false;
   var NAV_FADE = 140;
 
+  /* nav links -> their target sections, for the active-section underline */
+  var navTargets = Array.prototype.slice.call(document.querySelectorAll('.nav-menu a[href^="#"]'))
+    .map(function(a){ return { link: a, el: document.querySelector(a.getAttribute('href')) }; })
+    .filter(function(t){ return t.el; });
+
   function onScroll(){
     var y = window.scrollY || window.pageYOffset || 0;
     var doc = document.documentElement;
@@ -1234,6 +1281,16 @@ select.input option{background:#1d1d1d;color:#fff}
     if (fab){
       var threshold = hero ? hero.offsetHeight * 0.7 : 600;
       fab.classList.toggle('show', y > threshold);
+    }
+    if (navTargets.length){
+      var probe = y + window.innerHeight * 0.38;
+      var active = null;
+      for (var i = 0; i < navTargets.length; i++){
+        if (navTargets[i].el.offsetTop <= probe) active = navTargets[i];
+      }
+      navTargets.forEach(function(t){
+        t.link.classList.toggle('is-active', t === active);
+      });
     }
     ticking = false;
   }
@@ -1363,6 +1420,41 @@ select.input option{background:#1d1d1d;color:#fff}
       if (item.classList.contains('is-open')) faqPanelHeight(item, true);
     });
   });
+
+  /* GSAP scroll choreography — progressive enhancement only: the page is
+     fully styled and visible without it, and it's skipped entirely under
+     reduced motion. Scrub-driven, transform/opacity only, so nothing
+     animates while the page is idle. */
+  if (!reduceMotion && window.gsap && window.ScrollTrigger){
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* hero depth: skyline drifts slower than the page while the content
+       and decorative layers settle out as you scroll away */
+    var heroTl = gsap.timeline({
+      defaults:{ ease:'none' },
+      scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:0.6 }
+    });
+    heroTl.to('.hero-skyline', { yPercent:12 }, 0)
+          .to('.hero .container', { yPercent:-6, autoAlpha:0.35 }, 0)
+          .to('.hero-ring, .hero-grid', { autoAlpha:0 }, 0);
+
+    /* FAQ heading: words sharpen in sequentially as it scrolls into view */
+    var faqHead = document.getElementById('faq-heading');
+    if (faqHead){
+      var words = faqHead.textContent.trim().split(/\s+/);
+      faqHead.textContent = '';
+      words.forEach(function(w, i){
+        if (i) faqHead.appendChild(document.createTextNode(' '));
+        var s = document.createElement('span');
+        s.textContent = w;
+        faqHead.appendChild(s);
+      });
+      gsap.fromTo(faqHead.children, { opacity:0.14 }, {
+        opacity:1, stagger:0.12, ease:'none',
+        scrollTrigger:{ trigger:faqHead, start:'top 85%', end:'top 40%', scrub:0.6 }
+      });
+    }
+  }
 })();
 </script>
 <script src="/js/city-page.js"></script>
