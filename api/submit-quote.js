@@ -61,13 +61,32 @@ function isPlausibleEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 }
 
+// SMS bodies must stay within the GSM-7 (ASCII) character set. A single
+// non-ASCII character (em/en dash, curly quote, middle dot, accented letter)
+// forces UCS-2 encoding, which drops the per-segment limit from 160 to 70 and
+// can split one lead alert into extra billed texts. The booking wizard supplies
+// non-ASCII in the appointment field (en-dash time ranges, a middle-dot
+// separator), and a customer's name/address could carry accents, so we fold the
+// whole finished body to ASCII rather than trusting the inputs.
+function toAscii(value) {
+  return String(value == null ? "" : value)
+    .normalize("NFKD").replace(/[̀-ͯ]/g, "") // strip combining accent marks (e.g. Jose)
+    .replace(/[‐-―]/g, "-")            // hyphen / en dash / em dash -> -
+    .replace(/[‘’‚‛]/g, "'") // curly single quotes -> '
+    .replace(/[“”„‟]/g, '"') // curly double quotes -> "
+    .replace(/…/g, "...")                   // ellipsis -> ...
+    .replace(/[·•]/g, "-")             // middle dot / bullet -> -
+    .replace(/ /g, " ")                     // non-breaking space -> space
+    .replace(/[^\x00-\x7F]/g, "?");              // any remaining non-ASCII -> ?
+}
+
 function buildSmsBody(lead) {
   const vehicle = [lead.vehicleYear, lead.vehicleMake, lead.vehicleModel]
     .filter(Boolean)
     .join(" ");
 
   const lines = [
-    "NEW BOOKING — Motorsport Autoglass",
+    "Motorsport Autoglass: New booking",
     "",
     `Name:    ${lead.name}`,
     `Phone:   ${lead.phone}`,
@@ -80,10 +99,12 @@ function buildSmsBody(lead) {
     `Service: ${lead.service}`,
     `Cover:   ${lead.coverage || "Not specified"}`,
     `When:    ${lead.appointment}`,
-    `Where:   ${lead.address}, ${lead.city}`
+    `Where:   ${lead.address}, ${lead.city}`,
+    "",
+    "Reply STOP to unsubscribe"
   );
 
-  return lines.join("\n");
+  return toAscii(lines.join("\n"));
 }
 
 module.exports = async function handler(req, res) {
