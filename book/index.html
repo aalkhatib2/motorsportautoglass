@@ -400,7 +400,7 @@ input::placeholder{color:var(--dim)}
     var v3 = !!(s.insurer || s.payOwn);
     var covTitle = s.payOwn ? "Pay on my own — simple flat pricing" : ("Great — we work with " + (s.insurer || "them") + " every week.");
     var covBody = s.payOwn
-      ? "We'll text you an exact quote before your appointment. No claims paperwork, and repairs start around $89."
+      ? "We'll confirm your exact quote before your appointment. No claims paperwork, and repairs start around $89."
       : "We verify your coverage and file the whole claim for you. With comprehensive coverage, chip repairs are often $0 out of pocket.";
     var coverageLabel = s.payOwn ? "Pay on my own" : s.insurer;
 
@@ -420,7 +420,7 @@ input::placeholder{color:var(--dim)}
 
     var firstName = (s.name || "").trim().split(/\s+/)[0] || "";
     var confTitle = firstName ? ("You're booked, " + firstName + "!") : "You're booked!";
-    var confSub = "A confirmation text is headed to " + (s.phone || "your phone") + ". Your tech will text again when they're on the way to " + (s.address || "you") + ".";
+    var confSub = "We've got your request. Our team will reach out to " + (s.phone || "you") + " shortly to confirm your appointment.";
 
     var diagCaption = s.glass ? ({ windshield: "Windshield", side: (s.damage === "passenger" ? "Passenger side window" : "Driver side window"), rear: "Back glass" })[s.glass] : "Select your glass";
     var pct = { 1: "22%", 2: "46%", 3: "70%", 4: "90%", 5: "100%" }[s.step];
@@ -520,7 +520,7 @@ input::placeholder{color:var(--dim)}
       +     '<label class="bk-label" for="bk-style">Body style <span class="bk-req">*</span></label>'
       +     '<select class="bk-select" id="bk-style" data-action="onStyle"' + (d.styleReady ? '' : ' disabled') + '>' + optionsHTML(d.stylesList, s.style, "Select body style") + '</select>'
       +   '</div>'
-      +   '<p class="bk-hint">Can\'t find your vehicle? Choose <strong>Other (not listed)</strong> and type it in. We confirm everything by text before your appointment.</p>'
+      +   '<p class="bk-hint">Can\'t find your vehicle? Choose <strong>Other (not listed)</strong> and type it in. We confirm everything with you before your appointment.</p>'
       +   '<div class="bk-actions end">'
       +     '<button type="button" class="bk-btn' + (d.v1 ? '' : ' is-disabled') + '" id="bkPrimary" data-action="goNext1"' + (d.v1 ? '' : ' disabled') + '>Continue ' + ARROW + '</button>'
       +   '</div>'
@@ -645,7 +645,7 @@ input::placeholder{color:var(--dim)}
       + '<section class="bk-sec" data-label="Step 4 — Schedule">'
       +   '<span class="bk-kicker"><span class="bk-kicker-line"></span>Step Four — Scheduling</span>'
       +   '<h1 class="bk-h1">When should we come to you?</h1>'
-      +   '<p class="bk-lead">Pick a window that works — your tech texts you 30 minutes before arrival.</p>'
+      +   '<p class="bk-lead">Pick a window that works — your tech will be in touch before arrival.</p>'
       +   '<h2 class="bk-sub">Pick a day</h2>'
       +   '<div class="bk-days">' + days + '</div>'
       +   '<h2 class="bk-sub" style="margin:22px 0 10px">Pick a window</h2>'
@@ -690,8 +690,8 @@ input::placeholder{color:var(--dim)}
       +     rows
       +     '<h2 class="bk-conf-eyebrow" style="margin:22px 0 14px">What happens next</h2>'
       +     '<div class="bk-steps">'
-      +       '<div class="bk-step-item"><span class="bk-step-num">1</span><p><b>We confirm by text.</b> Glass is ordered for your exact vehicle and VIN-matched before we roll out.</p></div>'
-      +       '<div class="bk-step-item"><span class="bk-step-num">2</span><p><b>Your tech texts en route.</b> Most installs take about 60 minutes in your driveway.</p></div>'
+      +       '<div class="bk-step-item"><span class="bk-step-num">1</span><p><b>We confirm your booking.</b> Glass is ordered for your exact vehicle and VIN-matched before we roll out.</p></div>'
+      +       '<div class="bk-step-item"><span class="bk-step-num">2</span><p><b>Your tech heads your way.</b> Most installs take about 60 minutes in your driveway.</p></div>'
       +       '<div class="bk-step-item"><span class="bk-step-num">3</span><p><b>Drive in about an hour.</b> Lifetime workmanship warranty, crystal clear. Every time.</p></div>'
       +     '</div>'
       +   '</div>'
