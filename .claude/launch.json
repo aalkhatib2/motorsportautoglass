@@ -3,9 +3,16 @@
   "configurations": [
     {
       "name": "static-site",
-      "runtimeExecutable": "sh",
-      "runtimeArgs": ["-c", "python3 -m http.server $PORT"],
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["scripts/dev-server.py", "8080"],
       "port": 8080,
+      "autoPort": true
+    },
+    {
+      "name": "mockups",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8099", "-d", "C:/Users/Admin/AppData/Local/Temp/claude/C--Users-Admin-Desktop-Repos-motorsportautoglass/5ffe9702-ffe1-4e13-9746-8e723bb465d1/scratchpad"],
+      "port": 8099,
       "autoPort": true
     }
   ]

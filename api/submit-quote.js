@@ -18,6 +18,8 @@ const REQUIRED_FIELDS = [
   "phone",
   "address",
   "city",
+  "state",
+  "zip",
   "vehicleYear",
   "vehicleMake",
   "vehicleModel",
@@ -61,6 +63,11 @@ function isPlausibleEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
 }
 
+// 5-digit US ZIP (also accepts ZIP+4, which some browsers autofill).
+function isPlausibleZip(value) {
+  return /^\d{5}(-\d{4})?$/.test(String(value || "").trim());
+}
+
 // SMS bodies must stay within the GSM-7 (ASCII) character set. A single
 // non-ASCII character (em/en dash, curly quote, middle dot, accented letter)
 // forces UCS-2 encoding, which drops the per-segment limit from 160 to 70 and
@@ -97,9 +104,14 @@ function buildSmsBody(lead) {
   lines.push(
     `Vehicle: ${vehicle}${lead.vehicleStyle ? ` (${lead.vehicleStyle})` : ""}`,
     `Service: ${lead.service}`,
-    `Cover:   ${lead.coverage || "Not specified"}`,
+    `Cover:   ${lead.coverage || "Not specified"}`
+  );
+
+  if (lead.policyNumber) lines.push(`Policy:  ${lead.policyNumber}`);
+
+  lines.push(
     `When:    ${lead.appointment}`,
-    `Where:   ${lead.address}, ${lead.city}`,
+    `Where:   ${lead.address}${lead.suite ? " " + lead.suite : ""}, ${lead.city}, ${lead.state} ${lead.zip}`,
     "",
     "Reply STOP to unsubscribe"
   );
@@ -131,13 +143,17 @@ module.exports = async function handler(req, res) {
     phone: clean(body.phone),
     email: clean(body.email),
     address: clean(body.address),
+    suite: clean(body.suite),
     city: clean(body.city),
+    state: clean(body.state),
+    zip: clean(body.zip),
     vehicleYear: clean(body.vehicleYear),
     vehicleMake: clean(body.vehicleMake),
     vehicleModel: clean(body.vehicleModel),
     vehicleStyle: clean(body.vehicleStyle),
     service: clean(body.service),
     coverage: clean(body.coverage),
+    policyNumber: clean(body.policyNumber),
     appointment: clean(body.appointment),
   };
 
@@ -155,6 +171,14 @@ module.exports = async function handler(req, res) {
       ok: false,
       error: "That phone number doesn't look right. Please check it and try again.",
       fields: ["phone"],
+    });
+  }
+
+  if (!isPlausibleZip(lead.zip)) {
+    return res.status(400).json({
+      ok: false,
+      error: "That ZIP code doesn't look right. Please check it and try again.",
+      fields: ["zip"],
     });
   }
 

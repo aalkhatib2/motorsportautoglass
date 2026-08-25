@@ -145,6 +145,15 @@ input::placeholder{color:var(--dim)}
 .bk-time-chip svg{stroke:#9AA0A4;transition:stroke .25s}
 .bk-time-chip.is-on svg{stroke:var(--accent-bright)}
 .bk-fineprint{color:var(--dim);font-size:.8rem;margin:16px 0 0;text-align:right}
+/* Policy-number field, revealed when a carrier is selected on step 3. */
+.bk-policy{margin-top:18px;animation:bkStepIn .38s var(--e) both}
+.bk-policy .bk-label{display:flex;align-items:center;gap:9px}
+.bk-optional{
+  font-family:'Inter',sans-serif;font-weight:600;font-size:.62rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;padding:2px 8px;
+}
+@media (prefers-reduced-motion: reduce){.bk-policy{animation:none}}
 /* Honeypot: off-screen rather than display:none — some bots skip hidden inputs. */
 .bk-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .bk-error{
@@ -234,7 +243,10 @@ input::placeholder{color:var(--dim)}
   var FALLBACK_MAKES = ["Acura","Audi","BMW","Buick","Cadillac","Chevrolet","Chrysler","Dodge","Ford","GMC","Honda","Hyundai","Infiniti","Jeep","Kia","Lexus","Lincoln","Mazda","Mercedes-Benz","Mitsubishi","Nissan","Ram","Subaru","Tesla","Toyota","Volkswagen","Volvo",MAKE_OTHER];
   var INSURERS = ["GEICO","State Farm","Progressive","Allstate","USAA","Liberty Mutual","Farmers","Nationwide","Travelers","American Family","AAA / Auto Club","The General","Direct Auto","Kemper","Mercury","Safeco"];
   var TIMES = ["8–11 AM","11 AM–2 PM","2–5 PM","5–7 PM"];
-  var CITIES = ["Tampa","St. Petersburg","Clearwater","Brandon","Wesley Chapel","Phoenix","Scottsdale","Mesa","Tempe","Chandler","Other / nearby"];
+  // Suggestions only (rendered as a <datalist>) — the city field accepts free
+  // text, since the service area now spans all of Florida plus the AZ metros.
+  var CITIES = ["Tampa","St. Petersburg","Clearwater","Brandon","Wesley Chapel","Phoenix","Scottsdale","Mesa","Tempe","Chandler"];
+  var STATES = [{ code: "FL", name: "Florida" }, { code: "AZ", name: "Arizona" }];
 
   var _makesCache = null;
   var _modelsCache = {};
@@ -321,8 +333,8 @@ input::placeholder{color:var(--dim)}
     makesList:[], modelsList:[],
     makesLoading:false, modelsLoading:false,
     glass:"", damage:"",
-    insurer:"", payOwn:false, insQuery:"",
-    dateIdx:null, time:"", city:"Tampa", address:"",
+    insurer:"", payOwn:false, insQuery:"", policyNumber:"",
+    dateIdx:null, time:"", address:"", suite:"", city:"", stateCode:"", zip:"",
     name:"", phone:"", email:""
   };
 
@@ -355,6 +367,9 @@ input::placeholder{color:var(--dim)}
     _dateCache = out;
     return out;
   }
+
+  function fmtZip(v){ return String(v == null ? "" : v).replace(/\D/g, "").slice(0, 5); }
+  function isZip(v){ return /^\d{5}$/.test(String(v == null ? "" : v).trim()); }
 
   function fmtPhone(v){
     var d = String(v).replace(/\D/g, "").slice(0, 10);
@@ -405,15 +420,30 @@ input::placeholder{color:var(--dim)}
     var coverageLabel = s.payOwn ? "Pay on my own" : s.insurer;
 
     var dates = getDates();
-    var v4 = s.dateIdx !== null && !!(s.time && s.address && s.name && s.phone);
+    // Full address is required so the tech can actually find the vehicle;
+    // suite/apt stays optional. Gate the button here rather than letting the
+    // server 400 after the customer has already hit "Book my appointment".
+    var v4 = s.dateIdx !== null && !!(s.time && s.address.trim() && s.city.trim()
+      && s.stateCode && isZip(s.zip) && s.name.trim() && s.phone);
+
+    var fullAddress = "";
+    if (s.address.trim()){
+      fullAddress = s.address.trim() + (s.suite.trim() ? " " + s.suite.trim() : "");
+      var tail = [];
+      if (s.city.trim()) tail.push(s.city.trim());
+      var stZip = [s.stateCode, s.zip.trim()].filter(Boolean).join(" ");
+      if (stZip) tail.push(stZip);
+      if (tail.length) fullAddress += ", " + tail.join(", ");
+    }
     var apptLabel = (s.dateIdx !== null && s.time) ? (dates[s.dateIdx].full + " · " + s.time) : "";
 
     var summaryRows = [];
     if (s.year && makeLbl && modelLbl) summaryRows.push({ label: "Vehicle", value: s.year + " " + makeLbl + " " + modelLbl + (s.style ? " · " + s.style : "") });
     if (serviceLabel && (isRear || s.damage)) summaryRows.push({ label: "Service", value: serviceLabel });
     if (coverageLabel) summaryRows.push({ label: "Coverage", value: coverageLabel });
+    if (s.insurer && !s.payOwn && s.policyNumber.trim()) summaryRows.push({ label: "Policy #", value: s.policyNumber.trim() });
     if (apptLabel) summaryRows.push({ label: "When", value: apptLabel });
-    if (s.address) summaryRows.push({ label: "Where", value: s.address + ", " + s.city });
+    if (fullAddress) summaryRows.push({ label: "Where", value: fullAddress });
 
     var confirmRows = summaryRows.slice();
     if (s.name) confirmRows.push({ label: "Contact", value: s.name + (s.phone ? " · " + s.phone : "") });
@@ -589,6 +619,20 @@ input::placeholder{color:var(--dim)}
     return wrap;
   }
 
+  /* Policy-number field: revealed only once a carrier is picked, since the
+     number belongs to that carrier. Optional — never gates the Continue button;
+     the shop can collect it on the confirmation call if it's left blank. */
+  function policyFieldHTML(){
+    var s = state;
+    if (!s.insurer || s.payOwn) return '';
+    return ''
+      + '<div class="bk-policy">'
+      +   '<label class="bk-label" for="bk-policy">' + esc(s.insurer) + ' policy number <span class="bk-optional">optional</span></label>'
+      +   '<input class="bk-input" id="bk-policy" type="text" placeholder="Enter your policy number" value="' + esc(s.policyNumber) + '" data-action="onPolicy" autocomplete="off" spellcheck="false" />'
+      +   '<p class="bk-hint">Having this upfront lets us verify your coverage before we arrive. You can skip it — we\'ll ask when we confirm.</p>'
+      + '</div>';
+  }
+
   function step3(d){
     var s = state;
     var covNote = d.v3 ? '<div class="bk-note" style="margin-top:20px">' + SHIELD + '<p><b>' + esc(d.covTitle) + '</b>' + esc(d.covBody) + '</p></div>' : '';
@@ -606,6 +650,7 @@ input::placeholder{color:var(--dim)}
       +     '<input class="bk-input" id="bk-ins" type="text" placeholder="Start typing — GEICO, State Farm, Progressive…" value="' + esc(s.insQuery) + '" data-action="onInsQuery" autocomplete="off" />'
       +   '</div>'
       +   '<div id="bkInsWrap">' + insListHTML(d) + '</div>'
+      +   policyFieldHTML()
       +   '<div class="bk-or"><span class="line"></span><span class="txt">or</span><span class="line"></span></div>'
       +   '<button type="button" class="bk-opt bk-pay' + on(s.payOwn) + '" data-action="pickPay">'
       +     '<span class="bk-pay-ic"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"></rect><path d="M3 10h18"></path><path d="M7 15h4"></path></svg></span>'
@@ -639,7 +684,11 @@ input::placeholder{color:var(--dim)}
     }
     var cityOpts = '';
     for (var k = 0; k < CITIES.length; k++){
-      cityOpts += '<option value="' + esc(CITIES[k]) + '"' + (CITIES[k] === s.city ? ' selected' : '') + '>' + esc(CITIES[k]) + '</option>';
+      cityOpts += '<option value="' + esc(CITIES[k]) + '"></option>';
+    }
+    var stateOpts = '<option value="">State</option>';
+    for (var q = 0; q < STATES.length; q++){
+      stateOpts += '<option value="' + esc(STATES[q].code) + '"' + (STATES[q].code === s.stateCode ? ' selected' : '') + '>' + esc(STATES[q].name) + '</option>';
     }
     return ''
       + '<section class="bk-sec" data-label="Step 4 — Schedule">'
@@ -652,8 +701,14 @@ input::placeholder{color:var(--dim)}
       +   '<div class="bk-times">' + times + '</div>'
       +   '<h2 class="bk-sub" style="margin:26px 0 10px">Where should we meet you?</h2>'
       +   '<div class="bk-row">'
-      +     '<input class="bk-input" type="text" placeholder="Street address — home, office, anywhere" value="' + esc(s.address) + '" data-action="onAddress" aria-label="Street address" style="flex:2 1 240px" />'
-      +     '<select class="bk-select" data-action="onCity" aria-label="City" style="flex:1 1 160px">' + cityOpts + '</select>'
+      +     '<input class="bk-input" type="text" placeholder="Street address — home, office, anywhere" value="' + esc(s.address) + '" data-action="onAddress" aria-label="Street address" autocomplete="address-line1" style="flex:2 1 240px" />'
+      +     '<input class="bk-input" type="text" placeholder="Suite / Apt (optional)" value="' + esc(s.suite) + '" data-action="onSuite" aria-label="Suite or apartment number" autocomplete="address-line2" style="flex:1 1 150px" />'
+      +   '</div>'
+      +   '<div class="bk-row" style="margin-top:12px">'
+      +     '<input class="bk-input" type="text" list="bkCityList" placeholder="City" value="' + esc(s.city) + '" data-action="onCity" aria-label="City" autocomplete="address-level2" style="flex:2 1 170px" />'
+      +     '<datalist id="bkCityList">' + cityOpts + '</datalist>'
+      +     '<select class="bk-select" data-action="onState" aria-label="State" style="flex:0 1 140px">' + stateOpts + '</select>'
+      +     '<input class="bk-input" type="text" inputmode="numeric" maxlength="5" placeholder="ZIP code" value="' + esc(s.zip) + '" data-action="onZip" aria-label="ZIP code" autocomplete="postal-code" style="flex:0 1 130px" />'
       +   '</div>'
       +   '<h2 class="bk-sub" style="margin:26px 0 10px">Your contact info</h2>'
       +   '<div class="bk-row">'
@@ -795,13 +850,17 @@ input::placeholder{color:var(--dim)}
       phone: s.phone,
       email: s.email,
       address: s.address,
+      suite: s.suite,
       city: s.city,
+      state: s.stateCode,
+      zip: s.zip,
       vehicleYear: s.year,
       vehicleMake: vehicleMakeLabel(s),
       vehicleModel: vehicleModelLabel(s),
       vehicleStyle: s.style,
       service: d.serviceLabel,
       coverage: d.coverageLabel,
+      policyNumber: (s.insurer && !s.payOwn) ? s.policyNumber : "",
       appointment: d.apptLabel,
       website: hp ? hp.value : ""
     };
@@ -876,8 +935,12 @@ input::placeholder{color:var(--dim)}
       case "dFix": set({ damage: "repair" }); renderStepAndRail(); break;
       case "dDrv": set({ damage: "driver" }); renderStepAndRail(); break;
       case "dPas": set({ damage: "passenger" }); renderStepAndRail(); break;
-      case "pickIns": set({ insurer: el.getAttribute("data-ins"), payOwn: false }); renderStepAndRail(); break;
-      case "pickPay": set({ payOwn: true, insurer: "" }); renderStepAndRail(); break;
+      case "pickIns":
+        // A policy number belongs to one carrier — drop it if they switch.
+        var nextIns = el.getAttribute("data-ins");
+        set({ insurer: nextIns, payOwn: false, policyNumber: nextIns === state.insurer ? state.policyNumber : "" });
+        renderStepAndRail(); break;
+      case "pickPay": set({ payOwn: true, insurer: "", policyNumber: "" }); renderStepAndRail(); break;
       case "pickDate": set({ dateIdx: parseInt(el.getAttribute("data-idx"), 10) }); renderStepAndRail(); break;
       case "pickTime": set({ time: el.getAttribute("data-time") }); renderStepAndRail(); break;
     }
@@ -906,7 +969,7 @@ input::placeholder{color:var(--dim)}
         renderStepAndRail();
         break;
       case "onStyle": set({ style: val }); renderStepAndRail(); break;
-      case "onCity": set({ city: val }); renderRail(derive()); break;
+      case "onState": set({ stateCode: val }); renderRail(derive()); refreshPrimary(); break;
     }
   });
 
@@ -920,8 +983,17 @@ input::placeholder{color:var(--dim)}
         var wrap = document.getElementById("bkInsWrap");
         if (wrap) wrap.innerHTML = insListHTML(derive());
         break;
+      case "onPolicy":
+        // Rail-only update: re-rendering the step here would steal focus mid-typing.
+        set({ policyNumber: el.value }); renderRail(derive()); break;
       case "onAddress":
         set({ address: el.value }); renderRail(derive()); refreshPrimary(); break;
+      case "onSuite":
+        set({ suite: el.value }); renderRail(derive()); break;
+      case "onCity":
+        set({ city: el.value }); renderRail(derive()); refreshPrimary(); break;
+      case "onZip":
+        el.value = fmtZip(el.value); set({ zip: el.value }); renderRail(derive()); refreshPrimary(); break;
       case "onName":
         set({ name: el.value }); renderRail(derive()); refreshPrimary(); break;
       case "onPhone":
