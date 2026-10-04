@@ -885,6 +885,17 @@ input::placeholder{color:var(--dim)}
       })
       .then(function(res){
         if (res.ok && res.data && res.data.ok){
+          // Fire only on a genuinely successful send, so the conversion count
+          // matches the leads that actually reached the business.
+          try {
+            if (typeof window.va === "function") {
+              window.va("event", { name: "booking_completed", data: {
+                service: payload.service || "",
+                coverage: payload.coverage || "",
+                city: payload.city || ""
+              }});
+            }
+          } catch (e) {}
           go(5);
           return;
         }
@@ -1011,5 +1022,7 @@ input::placeholder{color:var(--dim)}
   render();
 })();
 </script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
