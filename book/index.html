@@ -362,7 +362,8 @@ input::placeholder{color:var(--dim)}
     for (var i = 0; i < 7; i++){
       var d = new Date(n.getFullYear(), n.getMonth(), n.getDate() + i);
       var dow = i === 0 ? "Today" : dows[d.getDay()];
-      out.push({ dow: dow, day: String(d.getDate()), mon: mons[d.getMonth()], full: dow + ", " + mons[d.getMonth()] + " " + d.getDate() });
+      var iso = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+      out.push({ dow: dow, day: String(d.getDate()), mon: mons[d.getMonth()], iso: iso, full: dow + ", " + mons[d.getMonth()] + " " + d.getDate() });
     }
     _dateCache = out;
     return out;
@@ -862,6 +863,8 @@ input::placeholder{color:var(--dim)}
       coverage: d.coverageLabel,
       policyNumber: (s.insurer && !s.payOwn) ? s.policyNumber : "",
       appointment: d.apptLabel,
+      appointmentDate: (s.dateIdx !== null && d.dates[s.dateIdx]) ? d.dates[s.dateIdx].iso : "",
+      appointmentTime: s.time || "",
       website: hp ? hp.value : ""
     };
 

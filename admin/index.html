@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Bookings · Motorsport Autoglass</title>
+<link rel="icon" href="/assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1A1A1A; --panel:#232323; --panel-2:#2B2B2B; --line:#383838;
+    --text:#F2F2F2; --muted:#9A9A9A; --accent:#00B4D8; --accent-2:#48CAE4;
+    --ok:#4CC38A; --warn:#F5B84B; --bad:#FF6B6B;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,sans-serif}
+  h1,h2,h3{font-family:Montserrat,Inter,sans-serif;margin:0}
+  [hidden]{display:none!important}
+  button,input,select,textarea{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+
+  /* login */
+  .login{min-height:100vh;display:grid;place-items:center;padding:24px}
+  .login-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px}
+  .login-card img{height:30px;display:block;margin-bottom:18px}
+  .login-card h1{font-size:20px;margin-bottom:4px}
+  .login-card p{color:var(--muted);margin:0 0 18px;font-size:14px}
+  .field{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;min-height:44px}
+  .field:focus{border-color:var(--accent);outline:none}
+  .btn{background:var(--accent);color:#04202A;border:0;border-radius:10px;padding:0 16px;min-height:44px;font-weight:600;cursor:pointer}
+  .btn:hover{background:var(--accent-2)}
+  .btn:disabled{opacity:.6;cursor:default}
+  .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);background:transparent}
+  .btn.block{width:100%;margin-top:12px}
+  .err{color:var(--bad);font-size:13px;min-height:18px;margin-top:10px}
+
+  /* header */
+  .top{border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:5}
+  .top .wrap{display:flex;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}
+  .top img{height:26px}
+  .top h1{font-size:16px;flex:1 1 auto}
+  .top .stamp{color:var(--muted);font-size:12px}
+  .top .btn{min-height:38px;font-size:13px}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 14px}
+  @media(min-width:720px){.stats{grid-template-columns:repeat(6,1fr)}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px;text-align:left;cursor:pointer}
+  .stat:hover{border-color:var(--accent)}
+  .stat[aria-pressed="true"]{border-color:var(--accent);background:#0E2F38}
+  .stat b{display:block;font:700 22px Montserrat,sans-serif;line-height:1.2}
+  .stat span{color:var(--muted);font-size:12px}
+
+  .toolbar{display:flex;gap:8px;margin-bottom:14px}
+  .toolbar .field{flex:1}
+
+  /* cards */
+  .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+  .card.is-new{border-left-color:var(--accent)}
+  .card.is-cancelled{opacity:.6}
+  .card-top{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+  .card h3{font-size:16px}
+  .when-in{color:var(--muted);font-size:12px;margin-top:2px}
+  .select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:6px 10px;min-height:38px}
+  .facts{display:grid;gap:8px 20px;margin:12px 0}
+  @media(min-width:720px){.facts{grid-template-columns:1fr 1fr}}
+  .fact small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+  .fact div{overflow-wrap:anywhere}
+  .links{display:flex;gap:8px;flex-wrap:wrap}
+  .links a{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;color:var(--accent-2);text-decoration:none;font-size:13px;font-weight:500}
+  .links a:hover{border-color:var(--accent)}
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin-left:6px;vertical-align:middle}
+  .badge.bad{color:var(--bad);border-color:var(--bad)}
+  details{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+  summary{cursor:pointer;color:var(--muted);font-size:13px;min-height:28px}
+  .more{display:grid;gap:8px 20px;margin:10px 0}
+  @media(min-width:720px){.more{grid-template-columns:1fr 1fr}}
+  textarea.field{min-height:80px;resize:vertical}
+  .notes-row{display:flex;gap:8px;align-items:flex-end;margin-top:6px;flex-wrap:wrap}
+  .notes-row textarea{flex:1 1 260px}
+  .saved{color:var(--ok);font-size:12px}
+  .empty{text-align:center;color:var(--muted);padding:48px 0}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--panel-2);border:1px solid var(--line);padding:10px 16px;border-radius:10px;font-size:13px;z-index:10}
+  .toast.bad{border-color:var(--bad);color:var(--bad)}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <img src="/assets/logo-light.png" alt="Motorsport Autoglass">
+    <h1>Bookings</h1>
+    <p>Enter the admin password to view incoming bookings.</p>
+    <label for="pw" class="sr" style="position:absolute;left:-9999px">Admin password</label>
+    <input class="field" id="pw" type="password" placeholder="Admin password" autocomplete="current-password" required>
+    <button class="btn block" id="loginBtn" type="submit">Sign in</button>
+    <div class="err" id="loginErr" role="alert"></div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="top">
+    <div class="wrap">
+      <img src="/assets/logo-light.png" alt="">
+      <h1>Bookings</h1>
+      <span class="stamp" id="stamp"></span>
+      <button class="btn ghost" id="refresh" type="button">Refresh</button>
+      <button class="btn ghost" id="export" type="button">Export CSV</button>
+      <button class="btn ghost" id="signout" type="button">Sign out</button>
+    </div>
+  </header>
+  <main class="wrap">
+    <div class="stats" id="stats" role="group" aria-label="Filter by status"></div>
+    <div class="toolbar">
+      <label for="q" style="position:absolute;left:-9999px">Search bookings</label>
+      <input class="field" id="q" type="search" placeholder="Search name, phone, vehicle, city, policy #…">
+    </div>
+    <div id="list"></div>
+    <p class="empty" id="empty" hidden></p>
+  </main>
+</div>
+
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+  "use strict";
+  var KEY = "msag_admin_pw";
+  var STATUSES = ["new","contacted","scheduled","completed","cancelled"];
+  var LABEL = { new:"New", contacted:"Contacted", scheduled:"Scheduled", completed:"Completed", cancelled:"Cancelled" };
+  var state = { pw:"", status:"", q:"", bookings:[], counts:null, open:{}, drafts:{} };
+
+  function $(id){ return document.getElementById(id); }
+  function store(op, v){
+    try{ if (op === "get") return sessionStorage.getItem(KEY); if (op === "set") sessionStorage.setItem(KEY, v); else sessionStorage.removeItem(KEY); }
+    catch(e){ return null; }
+  }
+
+  /* All customer-supplied text goes through textContent — never innerHTML. */
+  function el(tag, props, kids){
+    var n = document.createElement(tag);
+    Object.keys(props || {}).forEach(function(k){
+      var v = props[k];
+      if (k === "class") n.className = v;
+      else if (k === "text") n.textContent = v;
+      else if (k.indexOf("on") === 0) n.addEventListener(k.slice(2), v);
+      else n.setAttribute(k, v);
+    });
+    (kids || []).forEach(function(c){ if (c) n.appendChild(typeof c === "string" ? document.createTextNode(c) : c); });
+    return n;
+  }
+
+  var toastTimer;
+  function toast(msg, bad){
+    var t = $("toast"); t.textContent = msg; t.className = "toast" + (bad ? " bad" : ""); t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.hidden = true; }, 3200);
+  }
+
+  function api(method, path, body){
+    var headers = { Authorization: "Bearer " + state.pw };
+    if (body) headers["Content-Type"] = "application/json";
+    return fetch(path, { method: method, headers: headers, body: body ? JSON.stringify(body) : undefined, cache: "no-store" })
+      .then(function(r){
+        return r.json().catch(function(){ return {}; }).then(function(data){ return { status: r.status, data: data }; });
+      });
+  }
+
+  function showLogin(msg){
+    $("app").hidden = true; $("login").hidden = false;
+    $("loginErr").textContent = msg || "";
+    $("loginBtn").disabled = false;
+    $("pw").focus();
+  }
+  function signOut(msg){ store("del"); state.pw = ""; state.bookings = []; showLogin(msg); }
+
+  function ago(iso){
+    var s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
+    if (s < 60) return "just now";
+    if (s < 3600) return Math.floor(s / 60) + " min ago";
+    if (s < 86400) return Math.floor(s / 3600) + " hr ago";
+    return Math.floor(s / 86400) + " d ago";
+  }
+  function digits(v){ return String(v || "").replace(/\D/g, ""); }
+  function fullAddress(b){
+    return b.address + (b.suite ? " " + b.suite : "") + ", " + b.city + ", " + b.state + " " + b.zip;
+  }
+
+  /* ---------- data ---------- */
+  function load(quiet){
+    var qs = [];
+    if (state.status) qs.push("status=" + encodeURIComponent(state.status));
+    if (state.q) qs.push("q=" + encodeURIComponent(state.q));
+    return api("GET", "/api/bookings" + (qs.length ? "?" + qs.join("&") : "")).then(function(res){
+      if (res.status === 401 || res.status === 429){ signOut(res.data.error || "Please sign in again."); return; }
+      if (!res.data.ok){
+        var msg = res.data.error || "Couldn't load bookings.";
+        // Not signed in yet (e.g. admin access not configured): stay on the login screen.
+        if ($("app").hidden){ showLogin(msg); return; }
+        if (!quiet) toast(msg, true);
+        return;
+      }
+      $("login").hidden = true; $("app").hidden = false;
+      state.bookings = res.data.bookings; state.counts = res.data.counts;
+      $("stamp").textContent = "Updated " + new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      render();
+    }).catch(function(){ if (!quiet) toast("Network error — check your connection.", true); });
+  }
+
+  function patch(id, fields){
+    return api("PATCH", "/api/bookings", Object.assign({ id: id }, fields)).then(function(res){
+      if (res.status === 401){ signOut("Please sign in again."); return false; }
+      if (!res.data.ok){ toast(res.data.error || "Couldn't save.", true); return false; }
+      return true;
+    }).catch(function(){ toast("Network error — not saved.", true); return false; });
+  }
+
+  /* ---------- render ---------- */
+  function renderStats(){
+    var box = $("stats"); box.textContent = "";
+    var c = state.counts || {};
+    [["", "All", c.total || 0]].concat(STATUSES.map(function(s){ return [s, LABEL[s], c[s] || 0]; })).forEach(function(row){
+      box.appendChild(el("button", {
+        type: "button", class: "stat", "aria-pressed": String(state.status === row[0]),
+        onclick: function(){ state.status = row[0]; load(); }
+      }, [el("b", { text: String(row[2]) }), el("span", { text: row[1] })]));
+    });
+  }
+
+  function fact(label, value){
+    return el("div", { class: "fact" }, [el("small", { text: label }), el("div", { text: value || "—" })]);
+  }
+
+  function card(b){
+    var veh = [b.vehicleYear, b.vehicleMake, b.vehicleModel].join(" ") + (b.vehicleStyle ? " (" + b.vehicleStyle + ")" : "");
+    var d = digits(b.phone), tel = d.length === 10 ? "+1" + d : d;
+
+    var sel = el("select", {
+      class: "select", "aria-label": "Status for " + b.name,
+      onchange: function(e){
+        var next = e.target.value, prev = b.status;
+        patch(b.id, { status: next }).then(function(ok){
+          if (ok){ toast("Marked " + LABEL[next].toLowerCase()); load(true); } else { e.target.value = prev; }
+        });
+      }
+    }, STATUSES.map(function(s){
+      var o = el("option", { value: s, text: LABEL[s] }); if (s === b.status) o.selected = true; return o;
+    }));
+
+    var smsBadge = null;
+    if (b.smsStatus === "failed") smsBadge = el("span", { class: "badge bad", title: b.smsError || "", text: "Text failed" });
+    else if (b.smsStatus === "skipped") smsBadge = el("span", { class: "badge", text: "No text sent" });
+
+    var notes = el("textarea", {
+      class: "field", maxlength: "2000", "aria-label": "Notes for " + b.name, placeholder: "Internal notes — not shown to the customer",
+      oninput: function(e){ state.drafts[b.id] = e.target.value; saved.textContent = ""; }
+    });
+    notes.value = state.drafts[b.id] !== undefined ? state.drafts[b.id] : (b.notes || "");
+    var saved = el("span", { class: "saved" });
+    var saveBtn = el("button", { type: "button", class: "btn ghost", text: "Save notes", onclick: function(){
+      saveBtn.disabled = true;
+      patch(b.id, { notes: notes.value }).then(function(ok){
+        saveBtn.disabled = false;
+        if (ok){ delete state.drafts[b.id]; b.notes = notes.value; saved.textContent = "Saved"; }
+      });
+    }});
+
+    var links = el("div", { class: "links" }, [
+      el("a", { href: "tel:" + tel, text: "Call" }),
+      el("a", { href: "sms:" + tel, text: "Text" }),
+      b.email ? el("a", { href: "mailto:" + encodeURIComponent(b.email).replace(/%40/g, "@"), text: "Email" }) : null,
+      el("a", { href: "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(fullAddress(b)), target: "_blank", rel: "noopener noreferrer", text: "Map" })
+    ]);
+
+    var det = el("details", {}, [
+      el("summary", { text: "Coverage, notes & details" }),
+      el("div", { class: "more" }, [
+        fact("Coverage", b.coverage), fact("Policy #", b.policyNumber),
+        fact("Email", b.email), fact("Phone", b.phone),
+        fact("Received", new Date(b.createdAt).toLocaleString()), fact("Booking ID", b.id)
+      ]),
+      el("div", { class: "notes-row" }, [notes, el("div", {}, [saveBtn, saved])])
+    ]);
+    if (state.open[b.id]) det.open = true;
+    det.addEventListener("toggle", function(){ state.open[b.id] = det.open; });
+
+    return el("article", { class: "card is-" + b.status }, [
+      el("div", { class: "card-top" }, [
+        el("div", {}, [
+          el("h3", {}, [b.name, smsBadge]),
+          el("div", { class: "when-in", title: new Date(b.createdAt).toLocaleString(), text: "Received " + ago(b.createdAt) + " · " + b.phone })
+        ]),
+        sel
+      ]),
+      el("div", { class: "facts" }, [
+        fact("Vehicle", veh), fact("Service", b.service),
+        fact("Appointment", b.appointment), fact("Location", fullAddress(b))
+      ]),
+      links, det
+    ]);
+  }
+
+  function render(){
+    renderStats();
+    var list = $("list"); list.textContent = "";
+    state.bookings.forEach(function(b){ list.appendChild(card(b)); });
+    var empty = $("empty");
+    empty.hidden = state.bookings.length > 0;
+    if (!state.bookings.length){
+      empty.textContent = (state.q || state.status) ? "No bookings match." : "No bookings yet. They'll appear here the moment someone books.";
+    }
+  }
+
+  /* ---------- CSV ---------- */
+  var CSV_COLS = ["createdAt","status","name","phone","email","vehicleYear","vehicleMake","vehicleModel","vehicleStyle","service","coverage","policyNumber","appointment","address","suite","city","state","zip","smsStatus","notes","id"];
+  function csvCell(v){
+    var s = v == null ? "" : String(v);
+    // Customer-supplied text: neutralise spreadsheet formula injection.
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  function exportCsv(){
+    api("GET", "/api/bookings?limit=500").then(function(res){
+      if (!res.data.ok){ toast(res.data.error || "Export failed.", true); return; }
+      var rows = [CSV_COLS.join(",")].concat(res.data.bookings.map(function(b){
+        return CSV_COLS.map(function(c){ return csvCell(b[c]); }).join(",");
+      }));
+      var url = URL.createObjectURL(new Blob([rows.join("\r\n")], { type: "text/csv" }));
+      var a = el("a", { href: url, download: "bookings-" + new Date().toISOString().slice(0, 10) + ".csv" });
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+  }
+
+  /* ---------- wiring ---------- */
+  $("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    state.pw = $("pw").value; $("loginBtn").disabled = true; $("loginErr").textContent = "";
+    api("GET", "/api/bookings?limit=1").then(function(res){
+      if (res.status === 200){ store("set", state.pw); $("pw").value = ""; load(); return; }
+      state.pw = "";
+      showLogin(res.data.error || "Couldn't sign in.");
+    }).catch(function(){ state.pw = ""; showLogin("Network error — try again."); });
+  });
+  $("signout").addEventListener("click", function(){ signOut(""); });
+  $("refresh").addEventListener("click", function(){ load(); });
+  $("export").addEventListener("click", exportCsv);
+
+  var qTimer;
+  $("q").addEventListener("input", function(e){
+    clearTimeout(qTimer);
+    qTimer = setTimeout(function(){ state.q = e.target.value.trim(); load(); }, 250);
+  });
+
+  // Pick up new bookings without a manual refresh — but never re-render under
+  // someone who is mid-edit, and pause while the tab is hidden.
+  setInterval(function(){
+    var a = document.activeElement;
+    var editing = a && (a.tagName === "TEXTAREA" || a.tagName === "SELECT");
+    if (state.pw && !document.hidden && !editing) load(true);
+  }, 60000);
+
+  var remembered = store("get");
+  if (remembered){
+    // Resume this tab's session without flashing the login form.
+    state.pw = remembered; $("login").hidden = true;
+    load(true).then(function(){ if ($("app").hidden && $("login").hidden) showLogin(""); });
+  } else showLogin("");
+})();
+</script>
+</body>
+</html>
