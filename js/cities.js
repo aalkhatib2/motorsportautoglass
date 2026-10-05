@@ -13,7 +13,7 @@ window.CITY_PAGES = {
     servicesLead:
       "We come to your home, office, or roadside anywhere in Tampa — same-day windshield replacement with OEM-quality glass and a workmanship guarantee.",
     whyTitle: "Why Tampa Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Tampa Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -42,7 +42,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Sun, salt air, and coastal driving take a toll on your glass. We handle chips, cracks, and full replacements at your door.",
     whyTitle: "Why St. Pete Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What St. Petersburg Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -71,7 +71,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Beach parking lots, resort driveways, or your home — we replace windshields with precision and clean up every shard.",
     whyTitle: "Why Clearwater Chooses Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Clearwater Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -100,7 +100,7 @@ window.CITY_PAGES = {
     servicesLead:
       "SUV rear glass, sedan windshields, and everyday rock-chip repairs — done in your driveway with a workmanship guarantee.",
     whyTitle: "Why Brandon Families Trust Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Brandon Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -129,7 +129,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Newer SUVs and sedans need more than glass — we replace windshields and recalibrate lane-assist cameras at your location.",
     whyTitle: "Why Wesley Chapel Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Wesley Chapel Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -172,7 +172,7 @@ window.CITY_PAGES = {
     servicesLead:
       "From downtown high-rises to Ahwatukee driveways, our mobile team replaces windshields with OEM-quality glass — desert heat and dust handled.",
     whyTitle: "Why Phoenix Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Phoenix Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -201,7 +201,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Newer luxury SUVs and sedans need more than glass — we replace windshields and recalibrate lane-assist cameras at your home or office.",
     whyTitle: "Why Scottsdale Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Scottsdale Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -230,7 +230,7 @@ window.CITY_PAGES = {
     servicesLead:
       "SUV rear glass, sedan windshields, and everyday rock-chip repairs — done in your driveway with a workmanship guarantee.",
     whyTitle: "Why Mesa Families Trust Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Mesa Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -259,7 +259,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Campus lots, apartment complexes, or your home — we replace windshields with precision and clean up every shard.",
     whyTitle: "Why Tempe Chooses Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Tempe Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -288,7 +288,7 @@ window.CITY_PAGES = {
     servicesLead:
       "Tech-corridor commutes are tough on glass. We handle chips, cracks, and full replacements at your door.",
     whyTitle: "Why Chandler Trusts Us",
-    trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+    trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
     reviewsTitle: "What Chandler Drivers Are Saying",
     areaTitle: "Proudly Serving Florida & Arizona",
     areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",
@@ -322,7 +322,7 @@ window.HOME_CONTENT = {
   servicesLead:
     "From the Tampa Bay area to the Phoenix metro, our mobile team comes to your home, office, or roadside — same-day windshield replacement with OEM-quality glass and a workmanship guarantee.",
   whyTitle: "Why Drivers Trust Us",
-  trustTitle: "Rated 5.0 by Florida/Arizona Drivers",
+  trustTitle: "Rated 4.9 by Florida/Arizona Drivers",
   reviewsTitle: "What Drivers Are Saying",
   areaTitle: "Proudly Serving Florida & Arizona",
   areaLead: "From all cities across Florida to the Phoenix and Tucson metro areas, our mobile team comes directly to you.",

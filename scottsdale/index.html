@@ -50,7 +50,11 @@
   "image": "/assets/logo.png",
   "priceRange": "$$",
   "slogan": "Crystal Clear. Every Time.",
-  "sameAs": ["https://www.instagram.com/motorsportautoglass"],
+  "sameAs": [
+    "https://www.instagram.com/motorsportautoglass",
+    "https://maps.google.com/?cid=16880826004919222762"
+  ],
+  "hasMap": "https://maps.google.com/?cid=16880826004919222762",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Tampa",
@@ -66,8 +70,8 @@
   }],
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "5.0",
-    "reviewCount": "100",
+    "ratingValue": "4.9",
+    "reviewCount": "117",
     "bestRating": "5"
   },
   "areaServed": [
@@ -980,10 +984,10 @@ select.input option{background:#1d1d1d;color:#fff}
 
       <div class="trust-band reveal">
         <span class="kicker center">Google Reviews</span>
-        <h2 class="trust-title" data-city="trust-title">Rated 5.0 by Drivers</h2>
+        <h2 class="trust-title" data-city="trust-title">Rated 4.9 by Drivers</h2>
         <div class="rating">
           <div class="rating-top">
-            <span class="rating-score" data-count="5.0" data-decimals="1">0.0</span>
+            <span class="rating-score" data-count="4.9" data-decimals="1">0.0</span>
             <span class="rating-stars" role="img" aria-label="Rated 5 out of 5 stars">★★★★★</span>
           </div>
           <p class="rating-meta">
@@ -993,10 +997,12 @@ select.input option{background:#1d1d1d;color:#fff}
               <path fill="#FBBC05" d="M5.31 14.31a7.2 7.2 0 0 1 0-4.62V6.6H1.3a12 12 0 0 0 0 10.8z"/>
               <path fill="#EA4335" d="M12 4.75c1.76 0 3.34.61 4.59 1.8l3.43-3.43A11.99 11.99 0 0 0 12 0 12 12 0 0 0 1.3 6.6l4.01 3.09C6.25 6.86 8.89 4.75 12 4.75z"/>
             </svg>
-            Based on <strong><span data-count="100">0</span> Google Reviews</strong>
+            Based on <strong><span data-count="117">0</span> Google Reviews</strong>
           </p>
-          <!-- TODO: replace href with your Google Business Profile review link (e.g. https://g.page/r/...) -->
-          <a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=Motorsport+Autoglass" target="_blank" rel="noopener noreferrer">
+          <!-- Canonical Google Business Profile link, derived from the profile's
+               feature ID 0xac0120220acd0a09:0xea44bdd0226301ea. The cid form is
+               stable; a /maps/search/ URL would depend on Google ranking. -->
+          <a class="btn btn-primary" href="https://maps.google.com/?cid=16880826004919222762" target="_blank" rel="noopener noreferrer">
             Read our reviews
             <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
           </a>
