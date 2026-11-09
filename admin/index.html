@@ -255,6 +255,9 @@
     var smsBadge = null;
     if (b.smsStatus === "failed") smsBadge = el("span", { class: "badge bad", title: b.smsError || "", text: "Text failed" });
     else if (b.smsStatus === "skipped") smsBadge = el("span", { class: "badge", text: "No text sent" });
+    var emailBadge = b.emailStatus === "failed"
+      ? el("span", { class: "badge bad", title: b.emailError || "", text: "Email failed" })
+      : null;
 
     var notes = el("textarea", {
       class: "field", maxlength: "2000", "aria-label": "Notes for " + b.name, placeholder: "Internal notes — not shown to the customer",
@@ -292,7 +295,7 @@
     return el("article", { class: "card is-" + b.status }, [
       el("div", { class: "card-top" }, [
         el("div", {}, [
-          el("h3", {}, [b.name, smsBadge]),
+          el("h3", {}, [b.name, smsBadge, emailBadge]),
           el("div", { class: "when-in", title: new Date(b.createdAt).toLocaleString(), text: "Received " + ago(b.createdAt) + " · " + b.phone })
         ]),
         sel
@@ -317,7 +320,7 @@
   }
 
   /* ---------- CSV ---------- */
-  var CSV_COLS = ["createdAt","status","name","phone","email","vehicleYear","vehicleMake","vehicleModel","vehicleStyle","service","coverage","policyNumber","appointment","address","suite","city","state","zip","smsStatus","notes","id"];
+  var CSV_COLS = ["createdAt","status","name","phone","email","vehicleYear","vehicleMake","vehicleModel","vehicleStyle","service","coverage","policyNumber","appointment","address","suite","city","state","zip","smsStatus","emailStatus","notes","id"];
   function csvCell(v){
     var s = v == null ? "" : String(v);
     // Customer-supplied text: neutralise spreadsheet formula injection.

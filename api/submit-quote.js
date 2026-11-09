@@ -2,19 +2,22 @@
  * POST /api/submit-quote
  *
  * Receives a completed booking from the /book/ wizard, saves it to Postgres,
- * and texts Zaid the lead. The wizard's confirmation screen is gated on this
- * endpoint returning ok, and ok means the lead reached the business by at
- * least one route: saved to the database, texted, or both. The row is written
- * BEFORE the text is attempted so a Twilio outage never loses a lead, and the
- * outcome of the text is recorded on the row for the admin page to surface.
+ * then texts Zaid and emails the business inbox in parallel. The wizard's
+ * confirmation screen is gated on this endpoint returning ok, and ok means the
+ * lead reached the business by at least one route: saved, texted, or emailed.
+ * The row is written BEFORE notifying so a Twilio or email outage never loses
+ * a lead, and each notification's outcome is recorded on the row for the admin
+ * page to surface.
  *
  * Env vars (set in the Vercel dashboard, never committed):
  *   DATABASE_URL (or POSTGRES_URL)  — Postgres; optional, see lib/db.js
  *   TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_NUMBER, ZAID_PHONE_NUMBER
+ *   RESEND_API_KEY (+ optional LEAD_EMAIL_TO / LEAD_EMAIL_FROM) — see lib/email.js
  */
 
 const twilio = require("twilio");
 const db = require("../lib/db");
+const email = require("../lib/email");
 
 // Fields that must be present and non-empty for a lead to be actionable.
 // `email` is intentionally optional — the wizard marks it optional too.
@@ -134,6 +137,21 @@ function buildSmsBody(lead) {
   return toAscii(lines.join("\n"));
 }
 
+const SKIPPED = { status: "skipped", error: null };
+
+// Runs one notification and reports its outcome instead of throwing, so one
+// channel failing never cancels the other.
+async function attempt(label, send) {
+  try {
+    await send();
+    return { status: "sent", error: null };
+  } catch (err) {
+    const error = err && err.message ? err.message : "unknown error";
+    console.error(`submit-quote: ${label} failed:`, error);
+    return { status: "failed", error };
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -224,22 +242,24 @@ module.exports = async function handler(req, res) {
   const smsConfigured = Boolean(
     TWILIO_ACCOUNT_SID && TWILIO_AUTH_TOKEN && TWILIO_FROM_NUMBER && ZAID_PHONE_NUMBER
   );
+  const emailConfigured = email.isConfigured();
   const dbConfigured = db.isConfigured();
   const FAILURE_MESSAGE = "Booking couldn't be sent right now. Please call (813) 838-5104.";
 
-  if (!smsConfigured && !dbConfigured) {
+  if (!smsConfigured && !emailConfigured && !dbConfigured) {
     // Log for the Vercel function logs; never echo env values back to the client.
     console.error(
-      "submit-quote: no delivery route configured. Set DATABASE_URL and/or the Twilio " +
-        "vars (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_NUMBER, ZAID_PHONE_NUMBER) " +
-        "in the Vercel dashboard."
+      "submit-quote: no delivery route configured. Set DATABASE_URL, RESEND_API_KEY, " +
+        "and/or the Twilio vars (TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM_NUMBER, " +
+        "ZAID_PHONE_NUMBER) in the Vercel dashboard."
     );
     return res.status(500).json({ ok: false, error: FAILURE_MESSAGE });
   }
 
   // --- Save ---------------------------------------------------------------
   // First, so the lead is durable before anything else can go wrong. A DB
-  // failure is logged but isn't fatal on its own — the text can still deliver.
+  // failure is logged but isn't fatal on its own — the text and email can
+  // still deliver.
   let bookingId = null;
   if (dbConfigured) {
     try {
@@ -250,44 +270,43 @@ module.exports = async function handler(req, res) {
   }
 
   // --- Notify -------------------------------------------------------------
-  let smsStatus = "skipped";
-  let smsError = null;
-  if (smsConfigured) {
-    try {
-      const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
-      await client.messages.create({
-        to: ZAID_PHONE_NUMBER,
-        from: TWILIO_FROM_NUMBER,
-        body: buildSmsBody(lead),
-      });
-      smsStatus = "sent";
-    } catch (err) {
-      smsStatus = "failed";
-      smsError = err && err.message ? err.message : "unknown error";
-      console.error("submit-quote: Twilio send failed:", smsError);
-    }
-  }
+  // Text and email in parallel so the customer waits for the slower one, not both.
+  const [sms, mail] = await Promise.all([
+    smsConfigured
+      ? attempt("Twilio send", () =>
+          twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN).messages.create({
+            to: ZAID_PHONE_NUMBER,
+            from: TWILIO_FROM_NUMBER,
+            body: buildSmsBody(lead),
+          })
+        )
+      : SKIPPED,
+    emailConfigured
+      ? attempt("lead email", () => email.sendLeadEmail(lead, { bookingId }))
+      : SKIPPED,
+  ]);
 
   // Awaited (not fire-and-forget): the function can be frozen the moment the
   // response goes out. Best-effort — the booking itself is already saved.
   if (bookingId) {
     try {
-      await db.recordSmsResult(bookingId, smsStatus, smsError);
+      await db.recordNotifications(bookingId, sms, mail);
     } catch (err) {
-      console.error("submit-quote: could not record text status:", db.errorText(err));
+      console.error("submit-quote: could not record notification status:", db.errorText(err));
     }
-    if (smsStatus === "failed") {
+    if (sms.status === "failed" || mail.status === "failed") {
       console.error(
-        `submit-quote: booking ${bookingId} saved but the text failed — it will show a ` +
-          "'text failed' badge on the admin page."
+        `submit-quote: booking ${bookingId} saved but a notification failed — it is ` +
+          "flagged on the admin page."
       );
     }
   }
 
-  if (bookingId || smsStatus === "sent") {
+  if (bookingId || sms.status === "sent" || mail.status === "sent") {
     recentSubmissions.set(dedupeKey, now);
     return res.status(200).json({ ok: true });
   }
 
-  return res.status(smsStatus === "failed" ? 502 : 500).json({ ok: false, error: FAILURE_MESSAGE });
+  const anyFailed = sms.status === "failed" || mail.status === "failed";
+  return res.status(anyFailed ? 502 : 500).json({ ok: false, error: FAILURE_MESSAGE });
 };
